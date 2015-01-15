@@ -1,0 +1,69 @@
+#
+# (C) Copyright 2000-2007
+# Wolfgang Denk, DENX Software Engineering, wd@denx.de.
+#
+# See file CREDITS for list of people who contributed to this
+# project.
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of
+# the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307 USA
+#
+
+ifeq ($(CONFIG_ARCH_SUN8IW6P1),y)
+SUNXI_VIDEO_OBJ = sunxi_v3/dev_disp.o sunxi_v3/disp_sys_intf.o\
+				sunxi_v3/de/disp_display.o sunxi_v3/de/disp_features.o sunxi_v3/de/disp_device.o sunxi_v3/de/disp_lcd.o sunxi_v3/de/disp_manager.o sunxi_v3/de/disp_private.o \
+				sunxi_v3/de/disp_smart_backlight.o sunxi_v3/de/disp_enhance.o sunxi_v3/de/disp_capture.o sunxi_v3/de/disp_hdmi.o sunxi_v3/de/disp_vdevice.o\
+				sunxi_v3/lcd/panels.o sunxi_v3/lcd/lcd_source.o sunxi_v3/lcd/default_panel.o sunxi_v3/lcd/lt070me05000.o sunxi_v3/lcd/t27p06.o\
+				sunxi_v3/de/lowlevel_sun8iw6/de_fcc.o sunxi_v3/de/lowlevel_sun8iw6/de_gsu.o sunxi_v3/de/lowlevel_sun8iw6/de_hal.o sunxi_v3/de/lowlevel_sun8iw6/disp_al.o \
+				sunxi_v3/de/lowlevel_sun8iw6/de_peak.o sunxi_v3/de/lowlevel_sun8iw6/de_rtmx.o sunxi_v3/de/lowlevel_sun8iw6/de_scaler_table.o\
+				sunxi_v3/de/lowlevel_sun8iw6/de_vep_table.o sunxi_v3/de/lowlevel_sun8iw6/de_vsu.o sunxi_v3/de/lowlevel_sun8iw6/de_feat.o \
+				sunxi_v3/de/lowlevel_sun8iw6/de_lcd.o sunxi_v3/de/lowlevel_sun8iw6/de_lti.o sunxi_v3/de/lowlevel_sun8iw6/de_fce.o \
+				sunxi_v3/de/lowlevel_sun8iw6/de_ase.o sunxi_v3/de/lowlevel_sun8iw6/de_bws.o sunxi_v3/de/lowlevel_sun8iw6/de_enhance.o \
+				sunxi_v3/de/lowlevel_sun8iw6/de_smbl.o sunxi_v3/de/lowlevel_sun8iw6/de_ccsc.o sunxi_v3/de/lowlevel_sun8iw6/de_dcsc.o \
+				sunxi_v3/de/lowlevel_sun8iw6/de_wb.o sunxi_v3/de/lowlevel_sun8iw6/de_dsi.o sunxi_v3/de/lowlevel_sun8iw6/de_clock.o\
+				sunxi_v3/hdmi/aw/hdmi_core.o sunxi_v3/hdmi/aw/hdmi_edid.o sunxi_v3/hdmi/aw/hdmi_interface.o sunxi_v3/hdmi/drv_hdmi.o\
+				sunxi_v3/hdmi/aw/hdmi_hal.o sunxi_v3/hdmi/aw/hdmi_bsp_sun8iw6.o
+endif
+
+ifeq ($(CONFIG_ARCH_SUN8IW7P1),y)
+SUNXI_VIDEO_OBJ = sunxi_v3/dev_disp.o sunxi_v3/disp_sys_intf.o\
+				sunxi_v3/de/disp_display.o sunxi_v3/de/disp_features.o sunxi_v3/de/disp_device.o sunxi_v3/de/disp_lcd.o sunxi_v3/de/disp_manager.o sunxi_v3/de/disp_private.o \
+				sunxi_v3/de/disp_smart_backlight.o sunxi_v3/de/disp_enhance.o sunxi_v3/de/disp_capture.o sunxi_v3/de/disp_hdmi.o sunxi_v3/de/disp_vdevice.o\
+				sunxi_v3/lcd/panels.o sunxi_v3/lcd/lcd_source.o sunxi_v3/lcd/default_panel.o sunxi_v3/lcd/lt070me05000.o sunxi_v3/lcd/t27p06.o\
+				sunxi_v3/de/lowlevel_sun8iw7/de_fcc.o sunxi_v3/de/lowlevel_sun8iw7/de_gsu.o sunxi_v3/de/lowlevel_sun8iw7/de_hal.o sunxi_v3/de/lowlevel_sun8iw7/disp_al.o \
+				sunxi_v3/de/lowlevel_sun8iw7/de_peak.o sunxi_v3/de/lowlevel_sun8iw7/de_rtmx.o sunxi_v3/de/lowlevel_sun8iw7/de_scaler_table.o\
+				sunxi_v3/de/lowlevel_sun8iw7/de_vep_table.o sunxi_v3/de/lowlevel_sun8iw7/de_vsu.o sunxi_v3/de/lowlevel_sun8iw7/de_feat.o \
+				sunxi_v3/de/lowlevel_sun8iw7/de_lcd.o sunxi_v3/de/lowlevel_sun8iw7/de_lti.o sunxi_v3/de/lowlevel_sun8iw7/de_fce.o \
+				sunxi_v3/de/lowlevel_sun8iw7/de_ase.o sunxi_v3/de/lowlevel_sun8iw7/de_bws.o sunxi_v3/de/lowlevel_sun8iw7/de_enhance.o \
+				sunxi_v3/de/lowlevel_sun8iw7/de_smbl.o sunxi_v3/de/lowlevel_sun8iw7/de_ccsc.o sunxi_v3/de/lowlevel_sun8iw7/de_dcsc.o \
+				sunxi_v3/de/lowlevel_sun8iw7/de_wb.o sunxi_v3/de/lowlevel_sun8iw7/de_clock.o\
+				sunxi_v3/hdmi/aw/hdmi_core.o sunxi_v3/hdmi/aw/hdmi_edid.o sunxi_v3/hdmi/aw/hdmi_interface.o sunxi_v3/hdmi/drv_hdmi.o\
+				sunxi_v3/hdmi/aw/hdmi_hal.o sunxi_v3/hdmi/aw/hdmi_bsp_sun8iw7.o\
+				sunxi_v3/tv/drv_tv.o sunxi_v3/tv/de_tve.o sunxi_v3/de/disp_tv.o
+endif
+ifeq ($(CONFIG_ARCH_SUN8IW8P1),y)
+SUNXI_VIDEO_OBJ = sunxi_v3/dev_disp.o sunxi_v3/disp_sys_intf.o\
+				sunxi_v3/de/disp_display.o sunxi_v3/de/disp_features.o sunxi_v3/de/disp_device.o sunxi_v3/de/disp_lcd.o sunxi_v3/de/disp_manager.o sunxi_v3/de/disp_private.o \
+				sunxi_v3/de/disp_smart_backlight.o sunxi_v3/de/disp_enhance.o sunxi_v3/de/disp_capture.o sunxi_v3/de/disp_hdmi.o sunxi_v3/de/disp_vdevice.o\
+				sunxi_v3/lcd/panels.o sunxi_v3/lcd/lcd_source.o sunxi_v3/lcd/default_panel.o sunxi_v3/lcd/lt070me05000.o sunxi_v3/lcd/t27p06.o\
+				sunxi_v3/de/lowlevel_sun8iw8/de_fcc.o sunxi_v3/de/lowlevel_sun8iw8/de_gsu.o sunxi_v3/de/lowlevel_sun8iw8/de_hal.o sunxi_v3/de/lowlevel_sun8iw8/disp_al.o \
+				sunxi_v3/de/lowlevel_sun8iw8/de_peak.o sunxi_v3/de/lowlevel_sun8iw8/de_rtmx.o sunxi_v3/de/lowlevel_sun8iw8/de_scaler_table.o\
+				sunxi_v3/de/lowlevel_sun8iw8/de_vep_table.o sunxi_v3/de/lowlevel_sun8iw8/de_vsu.o sunxi_v3/de/lowlevel_sun8iw8/de_feat.o \
+				sunxi_v3/de/lowlevel_sun8iw8/de_lcd.o sunxi_v3/de/lowlevel_sun8iw8/de_lti.o sunxi_v3/de/lowlevel_sun8iw8/de_fce.o \
+				sunxi_v3/de/lowlevel_sun8iw8/de_ase.o sunxi_v3/de/lowlevel_sun8iw8/de_bws.o sunxi_v3/de/lowlevel_sun8iw8/de_enhance.o \
+				sunxi_v3/de/lowlevel_sun8iw8/de_smbl.o sunxi_v3/de/lowlevel_sun8iw8/de_ccsc.o sunxi_v3/de/lowlevel_sun8iw8/de_dcsc.o \
+				sunxi_v3/de/lowlevel_sun8iw8/de_wb.o sunxi_v3/de/lowlevel_sun8iw8/de_clock.o\
+
+endif

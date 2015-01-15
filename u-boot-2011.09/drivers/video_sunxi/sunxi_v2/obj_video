@@ -1,0 +1,95 @@
+#
+# (C) Copyright 2000-2007
+# Wolfgang Denk, DENX Software Engineering, wd@denx.de.
+#
+# See file CREDITS for list of people who contributed to this
+# project.
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of
+# the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307 USA
+#
+
+
+ifeq ($(CONFIG_ARCH_SUN9IW1P1),y)
+SUNXI_VIDEO_OBJ = sunxi_v2/dev_disp.o \
+					sunxi_v2/OSAL/OSAL_Clock.o sunxi_v2/OSAL/OSAL_Int.o sunxi_v2/OSAL/OSAL_IrqLock.o sunxi_v2/OSAL/OSAL_Cache.o\
+					sunxi_v2/OSAL/OSAL_Lib_C.o sunxi_v2/OSAL/OSAL_Pin.o sunxi_v2/OSAL/OSAL_Parser.o sunxi_v2/OSAL/OSAL_Pwm.o sunxi_v2/OSAL/OSAL_Power.o\
+					sunxi_v2/de_bsp/de/lowlevel_sun9iw1/de_be.o sunxi_v2/de_bsp/de/lowlevel_sun9iw1/de_fe.o sunxi_v2/de_bsp/de/lowlevel_sun9iw1/de_hwc.o sunxi_v2/de_bsp/de/lowlevel_sun9iw1/de_clock.o\
+					sunxi_v2/de_bsp/de/lowlevel_sun9iw1/de_layer.o sunxi_v2/de_bsp/de/lowlevel_sun9iw1/de_lcd.o sunxi_v2/de_bsp/de/lowlevel_sun9iw1/vga_std.o\
+					sunxi_v2/de_bsp/de/lowlevel_sun9iw1/iep_cmu.o sunxi_v2/de_bsp/de/lowlevel_sun9iw1/iep_deu.o sunxi_v2/de_bsp/de/lowlevel_sun9iw1/iep_deu_ebios.o\
+					sunxi_v2/de_bsp/de/lowlevel_sun9iw1/iep_drc.o sunxi_v2/de_bsp/de/lowlevel_sun9iw1/iep_drc_ebios.o\
+					sunxi_v2/de_bsp/de/lowlevel_sun9iw1/disp_al.o sunxi_v2/de_bsp/de/disp_features.o sunxi_v2/de_bsp/de/disp_private.o sunxi_v2/de_bsp/de/disp_hdmi.o\
+					sunxi_v2/de_bsp/de/disp_lcd.o sunxi_v2/de_bsp/de/disp_layer.o sunxi_v2/de_bsp/de/disp_cursor.o sunxi_v2/de_bsp/de/disp_manager.o\
+					sunxi_v2/de_bsp/de/disp_smart_backlight.o sunxi_v2/de_bsp/de/disp_smart_color.o sunxi_v2/de_bsp/de/disp_display.o\
+					sunxi_v2/de_bsp/lcd/lcd_panel_cfg.o  sunxi_v2/de_bsp/lcd/dev_lcd.o sunxi_v2/de_bsp/lcd/lcd_source_interface.o\
+					sunxi_v2/de_bsp/lcd/panels/panels.o sunxi_v2/de_bsp/lcd/panels/default_panel.o sunxi_v2/de_bsp/lcd/panels/tft720x1280.o sunxi_v2/de_bsp/lcd/panels/lp907qx.o\
+					sunxi_v2/de_bsp/hdmi/aw/hdmi_core.o sunxi_v2/de_bsp/hdmi/aw/hdmi_edid.o sunxi_v2/de_bsp/hdmi/aw/hdmi_interface.o sunxi_v2/de_bsp/hdmi/drv_hdmi.o\
+					sunxi_v2/de_bsp/hdmi/aw/hdmi_hal.o sunxi_v2/de_bsp/lcd/panels/starry768x1024.o sunxi_v2/de_bsp/lcd/panels/sl698ph_720p.o\
+					sunxi_v2/de_bsp/lcd/panels/lp079x01.o sunxi_v2/de_bsp/lcd/panels/B116XAN03.o
+
+endif
+
+ifeq ($(CONFIG_ARCH_SUN8IW5P1),y)
+SUNXI_VIDEO_OBJ = sunxi_v2/dev_disp.o\
+					sunxi_v2/OSAL/OSAL_Clock.o sunxi_v2/OSAL/OSAL_Int.o sunxi_v2/OSAL/OSAL_IrqLock.o sunxi_v2/OSAL/OSAL_Cache.o\
+					sunxi_v2/OSAL/OSAL_Lib_C.o sunxi_v2/OSAL/OSAL_Pin.o sunxi_v2/OSAL/OSAL_Parser.o sunxi_v2/OSAL/OSAL_Pwm.o sunxi_v2/OSAL/OSAL_Power.o\
+					sunxi_v2/de_bsp/de/lowlevel_sun8iw5/de_be.o sunxi_v2/de_bsp/de/lowlevel_sun8iw5/de_fe.o sunxi_v2/de_bsp/de/lowlevel_sun8iw5/de_hwc.o\
+					sunxi_v2/de_bsp/de/lowlevel_sun8iw5/de_clock.o sunxi_v2/de_bsp/de/lowlevel_sun8iw5/de_layer.o sunxi_v2/de_bsp/de/lowlevel_sun8iw5/de_lcd.o\
+					sunxi_v2/de_bsp/de/lowlevel_sun8iw5/de_dsi.o sunxi_v2/de_bsp/de/lowlevel_sun8iw5/vga_std.o sunxi_v2/de_bsp/de/lowlevel_sun8iw5/de_tve.o\
+					sunxi_v2/de_bsp/de/lowlevel_sun8iw5/iep_wb_ebios.o sunxi_v2/de_bsp/de/lowlevel_sun8iw5/iep_drc.o sunxi_v2/de_bsp/de/lowlevel_sun8iw5/disp_al.o\
+					sunxi_v2/de_bsp/de/lowlevel_sun8iw5/iep_drc_ebios.o sunxi_v2/de_bsp/de/lowlevel_sun8iw5/sat.o sunxi_v2/de_bsp/de/disp_features.o\
+					sunxi_v2/de_bsp/de/disp_lcd.o sunxi_v2/de_bsp/de/disp_layer.o sunxi_v2/de_bsp/de/disp_manager.o sunxi_v2/de_bsp/de/disp_private.o\
+					sunxi_v2/de_bsp/de/disp_smart_backlight.o sunxi_v2/de_bsp/de/disp_smart_color.o sunxi_v2/de_bsp/de/disp_display.o\
+					sunxi_v2/de_bsp/lcd/lcd_panel_cfg.o  sunxi_v2/de_bsp/lcd/dev_lcd.o sunxi_v2/de_bsp/lcd/lcd_source_interface.o\
+					sunxi_v2/de_bsp/lcd/panels/panels.o sunxi_v2/de_bsp/lcd/panels/default_panel.o sunxi_v2/de_bsp/lcd/panels/tft720x1280.o sunxi_v2/de_bsp/lcd/panels/lp907qx.o\
+					sunxi_v2/de_bsp/lcd/panels/starry768x1024.o sunxi_v2/de_bsp/lcd/panels/sl698ph_720p.o\
+					sunxi_v2/de_bsp/lcd/panels/lp079x01.o sunxi_v2/de_bsp/lcd/panels/B116XAN03.o
+
+endif
+
+ifeq ($(CONFIG_ARCH_SUN8IW8P1),y)
+SUNXI_VIDEO_OBJ = sunxi_v2/dev_disp.o\
+					sunxi_v2/OSAL/OSAL_Clock.o sunxi_v2/OSAL/OSAL_Int.o sunxi_v2/OSAL/OSAL_IrqLock.o sunxi_v2/OSAL/OSAL_Cache.o\
+					sunxi_v2/OSAL/OSAL_Lib_C.o sunxi_v2/OSAL/OSAL_Pin.o sunxi_v2/OSAL/OSAL_Parser.o sunxi_v2/OSAL/OSAL_Pwm.o sunxi_v2/OSAL/OSAL_Power.o\
+					sunxi_v2/de_bsp/de/lowlevel_sun8iw8/de_be.o sunxi_v2/de_bsp/de/lowlevel_sun8iw8/de_fe.o sunxi_v2/de_bsp/de/lowlevel_sun8iw8/de_hwc.o\
+					sunxi_v2/de_bsp/de/lowlevel_sun8iw8/de_clock.o sunxi_v2/de_bsp/de/lowlevel_sun8iw8/de_layer.o sunxi_v2/de_bsp/de/lowlevel_sun8iw8/de_lcd.o\
+					sunxi_v2/de_bsp/de/lowlevel_sun8iw8/de_dsi.o sunxi_v2/de_bsp/de/lowlevel_sun8iw8/vga_std.o sunxi_v2/de_bsp/de/lowlevel_sun8iw8/de_tve.o\
+					sunxi_v2/de_bsp/de/lowlevel_sun8iw8/iep_wb_ebios.o sunxi_v2/de_bsp/de/lowlevel_sun8iw8/iep_drc.o sunxi_v2/de_bsp/de/lowlevel_sun8iw8/disp_al.o\
+					sunxi_v2/de_bsp/de/lowlevel_sun8iw8/iep_drc_ebios.o sunxi_v2/de_bsp/de/lowlevel_sun8iw8/sat.o sunxi_v2/de_bsp/de/disp_features.o\
+					sunxi_v2/de_bsp/de/disp_lcd.o sunxi_v2/de_bsp/de/disp_layer.o sunxi_v2/de_bsp/de/disp_manager.o sunxi_v2/de_bsp/de/disp_private.o\
+					sunxi_v2/de_bsp/de/disp_smart_backlight.o sunxi_v2/de_bsp/de/disp_smart_color.o sunxi_v2/de_bsp/de/disp_display.o\
+					sunxi_v2/de_bsp/lcd/lcd_panel_cfg.o  sunxi_v2/de_bsp/lcd/dev_lcd.o sunxi_v2/de_bsp/lcd/lcd_source_interface.o\
+					sunxi_v2/de_bsp/lcd/panels/panels.o sunxi_v2/de_bsp/lcd/panels/default_panel.o sunxi_v2/de_bsp/lcd/panels/tft720x1280.o sunxi_v2/de_bsp/lcd/panels/lp907qx.o\
+					sunxi_v2/de_bsp/lcd/panels/starry768x1024.o sunxi_v2/de_bsp/lcd/panels/sl698ph_720p.o\
+					sunxi_v2/de_bsp/lcd/panels/lp079x01.o sunxi_v2/de_bsp/lcd/panels/B116XAN03.o\
+
+endif
+ifeq ($(CONFIG_ARCH_SUN8IW7P1),y)
+SUNXI_VIDEO_OBJ = sunxi_v2/dev_disp.o\
+					sunxi_v2/OSAL/OSAL_Clock.o sunxi_v2/OSAL/OSAL_Int.o sunxi_v2/OSAL/OSAL_IrqLock.o sunxi_v2/OSAL/OSAL_Cache.o\
+					sunxi_v2/OSAL/OSAL_Lib_C.o sunxi_v2/OSAL/OSAL_Pin.o sunxi_v2/OSAL/OSAL_Parser.o sunxi_v2/OSAL/OSAL_Pwm.o sunxi_v2/OSAL/OSAL_Power.o\
+					sunxi_v2/de_bsp/de/lowlevel_sun8iw7/de_be.o sunxi_v2/de_bsp/de/lowlevel_sun8iw7/de_fe.o sunxi_v2/de_bsp/de/lowlevel_sun8iw7/de_hwc.o\
+					sunxi_v2/de_bsp/de/lowlevel_sun8iw7/de_clock.o sunxi_v2/de_bsp/de/lowlevel_sun8iw7/de_layer.o sunxi_v2/de_bsp/de/lowlevel_sun8iw7/de_lcd.o\
+					sunxi_v2/de_bsp/de/lowlevel_sun8iw7/de_dsi.o sunxi_v2/de_bsp/de/lowlevel_sun8iw7/vga_std.o sunxi_v2/de_bsp/de/lowlevel_sun8iw7/de_tve.o\
+					sunxi_v2/de_bsp/de/lowlevel_sun8iw7/iep_wb_ebios.o sunxi_v2/de_bsp/de/lowlevel_sun8iw7/iep_drc.o sunxi_v2/de_bsp/de/lowlevel_sun8iw7/disp_al.o\
+					sunxi_v2/de_bsp/de/lowlevel_sun8iw7/iep_drc_ebios.o sunxi_v2/de_bsp/de/lowlevel_sun8iw7/sat.o sunxi_v2/de_bsp/de/disp_features.o\
+					sunxi_v2/de_bsp/de/disp_lcd.o sunxi_v2/de_bsp/de/disp_layer.o sunxi_v2/de_bsp/de/disp_manager.o sunxi_v2/de_bsp/de/disp_private.o\
+					sunxi_v2/de_bsp/de/disp_smart_backlight.o sunxi_v2/de_bsp/de/disp_smart_color.o sunxi_v2/de_bsp/de/disp_display.o\
+					sunxi_v2/de_bsp/lcd/lcd_panel_cfg.o  sunxi_v2/de_bsp/lcd/dev_lcd.o sunxi_v2/de_bsp/lcd/lcd_source_interface.o\
+					sunxi_v2/de_bsp/lcd/panels/panels.o sunxi_v2/de_bsp/lcd/panels/default_panel.o sunxi_v2/de_bsp/lcd/panels/tft720x1280.o sunxi_v2/de_bsp/lcd/panels/lp907qx.o\
+					sunxi_v2/de_bsp/lcd/panels/starry768x1024.o sunxi_v2/de_bsp/lcd/panels/sl698ph_720p.o\
+					sunxi_v2/de_bsp/lcd/panels/lp079x01.o  sunxi_v2/de_bsp/lcd/panels/B116XAN03.o\
+
+endif
