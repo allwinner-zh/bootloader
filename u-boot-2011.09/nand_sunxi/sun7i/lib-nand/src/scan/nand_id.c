@@ -1,34 +1,26 @@
 /*
-************************************************************************************************************************
-*                                                      eNand
-*                                           Nand flash driver scan module
-*
-*                             Copyright(C), 2008-2009, SoftWinners Microelectronic Co., Ltd.
-*                                                  All Rights Reserved
-*
-* File Name : nand_id.c
-*
-* Author : Kevin.z
-*
-* Version : v0.1
-*
-* Date : 2008.03.27
-*
-* Description : This file is a table, that record the physical architecture parameter for
-*               every kind of nand flash, and indexed by the nand chip ID.
-*
-* Others : None at present.
-*
-*
-* History :
-*
-*  <Author>        <time>       <version>      <description>
-*
-* Kevin.z         2008.03.27      0.1          build the file
-* penggang        2009.09.09      0.2          modify the file
-*
-************************************************************************************************************************
-*/
+ * (C) Copyright 2007-2013
+ * Allwinner Technology Co., Ltd. <www.allwinnertech.com>
+ * Jerry Wang <wangflord@allwinnertech.com>
+ *
+ * See file CREDITS for list of people who contributed to this
+ * project.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of
+ * the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ * MA 02111-1307 USA
+ */
 
 #include "../include/nand_scan.h"
 
@@ -238,7 +230,7 @@ struct __NandPhyInfoPar_t SamsungNandTbl[] =
 	{ {0xec, 0xd7, 0x94, 0x7E, 0x64, 0xc4, 0xff, 0xff }, 1,    16,     128,     4096,   0x05c8,   870,    60,     4,   0x200e04,     3,     &PhysicArchiPara3 },   // toogle nand 2.0 K9GBGD8U0B
     { {0xec, 0xd7, 0x94, 0x7e, 0x64, 0x44, 0xff, 0xff }, 1,    16,     128,     4096, 0x0111c8,   870,    40,     4,   0x200e04,     0,     &PhysicArchiPara3 },   // 21nm sdr K9GBG08U0B
     { {0xec, 0xde, 0xd5, 0x7e, 0x68, 0x44, 0xff, 0xff }, 2,    16,     128,     4096, 0x111c8,   870,    40,     4,   0x200e04,     0,     &PhysicArchiPara3 },   // 21nm sdr K9LCG08U0B
-	{ {0xec, 0xd7, 0x14, 0x76, 0x54, 0xc2, 0xff, 0xff }, 1,    16,     128,     4096, 0x0110c8,   870,    20,     3,       0,        3,     &PhysicArchiPara3 },   // K9GBGD8U0M    
+	{ {0xec, 0xd7, 0x14, 0x76, 0x54, 0xc2, 0xff, 0xff }, 1,    16,     128,     4096, 0x0110c8,   870,    20,     3,       0,        3,     &PhysicArchiPara3 },   // K9GBGD8U0M
     //-----------------------------------------------------------------------------------------------------------------------------------
     { {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff }, 0,     0,       0,        0,   0x0000,     0,     0,     0,       0,        0,      0                 },   // NULL
 };
@@ -365,8 +357,8 @@ struct __NandPhyInfoPar_t MicronNandTbl[] =
     { {0x2c, 0x48, 0x04, 0x4A, 0xff, 0xff, 0xff, 0xff }, 1,     8,     256,     2048,   0x001248,   870,    40,     2,     0,     0,   &PhysicArchiPara4 },   // MT29F16G08CBACA
     { {0x2c, 0x48, 0x04, 0x46, 0xff, 0xff, 0xff, 0xff }, 1,     8,     256,     2048,   0x001248,   870,    30,     2,     0,     0,   &PhysicArchiPara4 },   // MT29F16G08CBABA
     { {0x2c, 0x64, 0x44, 0x4B, 0xA9, 0xff, 0xff, 0xff }, 1,    16,     256,     4096,   0x0217c8,   870,    30,     5,   0x400a01,     0,   &PhysicArchiPara4 },   // MT29F64G08CBABA
-    { {0x2c, 0x44, 0x44, 0x4B, 0xA9, 0xff, 0xff, 0xff }, 1,    16,     256,     2048,   0x0217c8,   870,    30,     5,   0x400a01,     0,   &PhysicArchiPara4 },   // MT29F32G08CBADA    
-    { {0x2c, 0x88, 0x24, 0x4B, 0xff, 0xff, 0xff, 0xff }, 1,    16,     256,     4096,   0x001248,   870,  40,     2,     0,     0,   &PhysicArchiPara4 },   // MT29F64G08CBAAA  
+    { {0x2c, 0x44, 0x44, 0x4B, 0xA9, 0xff, 0xff, 0xff }, 1,    16,     256,     2048,   0x0217c8,   870,    30,     5,   0x400a01,     0,   &PhysicArchiPara4 },   // MT29F32G08CBADA
+    { {0x2c, 0x88, 0x24, 0x4B, 0xff, 0xff, 0xff, 0xff }, 1,    16,     256,     4096,   0x001248,   870,  40,     2,     0,     0,   &PhysicArchiPara4 },   // MT29F64G08CBAAA
 	//-------------------------------------------------------------------------------------------------------------------------
     { {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff }, 0,     0,       0,        0,   0x0000,     0,     0,    0,     0,      0,      0              },   // NULL
 };

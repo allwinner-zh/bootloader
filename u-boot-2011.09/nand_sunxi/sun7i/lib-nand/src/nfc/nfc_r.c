@@ -1,14 +1,26 @@
-/*********************************************************************************
-*                                           NAND FLASH DRIVER
-*								(c) Copyright 2008, SoftWinners Co,Ld.
-*                                          All Right Reserved
-*file : nfc_r.c
-*description : this file provides some physic functions for upper nand driver layer.
-*history :
-*	v0.1  2008-03-26 Richard
-*	        offer direct accsee read method to nand flash control machine.
-*   v0.2  2009.09.09 penggang
-**********************************************************************************/
+/*
+ * (C) Copyright 2007-2013
+ * Allwinner Technology Co., Ltd. <www.allwinnertech.com>
+ * Jerry Wang <wangflord@allwinnertech.com>
+ *
+ * See file CREDITS for list of people who contributed to this
+ * project.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of
+ * the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ * MA 02111-1307 USA
+ */
 #include "../include/nfc.h"
 
 __u32	nand_board_version=0;
@@ -47,11 +59,11 @@ static void dumphex32(char* name, char* base, int len)
 
 static void dumpreg()
 {
-	
+
 	dumphex32("nand0 reg", (char*)0x01c03000, 60);
-	
+
 	dumphex32("gpio reg", (char*)0x01c20848, 50);
-	
+
 	dumphex32("dma reg", (char*)0x01c02300, 50);
 
 	dumphex32("clk reg", (char*)0x01c00080, 10);
@@ -161,7 +173,7 @@ __s32 _wait_dma_end(__u8 rw, __u32 buff_addr, __u32 len)
       	dumphex32("gpio reg", (char*)0x01c20848, 50);
 
 		dumphex32("dma reg", (char*)0x01c02300, 50);
-		
+
 		return -ERR_TIMEOUT;
     }
 
@@ -877,13 +889,13 @@ void NFC_Exit( void )
 ********************************************************************************/
 __s32 _vender_get_param(__u8 *para, __u8 *addr, __u32 count)
 {
-    
+
 	return 0;
 }
 
 __s32 _vender_set_param(__u8 *para, __u8 *addr, __u32 count)
 {
-    
+
 	return 0;
 }
 
@@ -895,7 +907,7 @@ __s32 _vender_pre_condition(void)
 
 __s32 _vender_get_param_otp_hynix(__u8 *para, __u8 *addr, __u32 count)
 {
-    
+
 	return 0;
 }
 
@@ -908,7 +920,7 @@ __s32 NFC_ReadRetry(__u32 chip, __u32 retry_count, __u32 read_retry_type)
 
 __s32 NFC_ReadRetryInit(__u32 read_retry_type)
 {
-	
+
 	return 0;
 }
 
@@ -925,8 +937,8 @@ __s32 NFC_GetDefaultParam(__u32 chip,__u8* default_value, __u32 read_retry_type)
 
 __s32 NFC_SetDefaultParam(__u32 chip,__u8* default_value,__u32 read_retry_type)
 {
- 
-    return 0;   
+
+    return 0;
 }
 
 
@@ -987,9 +999,9 @@ __u32 NFC_GetRbStatus(__u32 rb)
     if(rb == 0)
         return (NFC_READ_REG(NFC_REG_ST) & NFC_RB_STATE0);
     else if(rb == 1)
-        return (NFC_READ_REG(NFC_REG_ST) & NFC_RB_STATE1); 
-    else 
-        return 0;        
+        return (NFC_READ_REG(NFC_REG_ST) & NFC_RB_STATE1);
+    else
+        return 0;
 }
 
 void NFC_DmaIntEnable(void)

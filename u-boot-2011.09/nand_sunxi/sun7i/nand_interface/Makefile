@@ -1,6 +1,6 @@
 #
-# (C) Copyright 2006
-# Wolfgang Denk, DENX Software Engineering, wd@denx.de.
+# (C) Copyright 2008
+# Jerry Wang, Allwinnertech Software Engineer, wangflord@allwinnertech.com.
 #
 # See file CREDITS for list of people who contributed to this
 # project.
@@ -26,7 +26,7 @@ include $(TOPDIR)/config.mk
 LIB	:= $(obj)libnand_interface.o
 
 COBJS-y += nand_for_uboot.o		\
-		   nand_fspart.o		
+		   nand_fspart.o
 
 COBJS	:= $(COBJS-y)
 SRCS	:= $(COBJS:.o=.c)

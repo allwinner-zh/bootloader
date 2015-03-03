@@ -1,14 +1,26 @@
-/*********************************************************************************************************
-*                                                                NAND FLASH DRIVER
-*								(c) Copyright 2008, SoftWinners Co,Ld.
-*                                          			    All Right Reserved
-*file : nand_phy.c
-*description : this file creates some physic optimize access function for system .
-*history :
-*	v0.1  2008-03-26 Richard
-* v0.2  2009-9-3 penggang modified for 1615
-*
-*********************************************************************************************************/
+/*
+ * (C) Copyright 2007-2013
+ * Allwinner Technology Co., Ltd. <www.allwinnertech.com>
+ * Jerry Wang <wangflord@allwinnertech.com>
+ *
+ * See file CREDITS for list of people who contributed to this
+ * project.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of
+ * the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ * MA 02111-1307 USA
+ */
 #include "../include/nand_type.h"
 #include "../include/nand_physic.h"
 #include "../include/nand_simple.h"
@@ -275,7 +287,7 @@ __s32 _read_single_page_spare(struct boot_physical_param *readop,__u8 dma_wait_m
 	NFC_SelectChip(readop->chip);
 	NFC_SelectRb(rb);
 
-    if(SUPPORT_READ_RETRY)  
+    if(SUPPORT_READ_RETRY)
     {
         if((READ_RETRY_MODE>=0x10)&&(READ_RETRY_MODE<0x60))  //toshiba & Samsung mode & Sandisk mode & micron mode & intel mode
         {
@@ -297,7 +309,7 @@ __s32 _read_single_page_spare(struct boot_physical_param *readop,__u8 dma_wait_m
 				}
 			}
 
-        }    
+        }
         for( k = 0; k<READ_RETRY_CYCLE+1;k++)
 		{
 			if(RetryCount[readop->chip]==(READ_RETRY_CYCLE+1))
@@ -329,7 +341,7 @@ __s32 _read_single_page_spare(struct boot_physical_param *readop,__u8 dma_wait_m
 				{
 					if((sparebuf[0] == 0x32)&&(sparebuf[1] == 0x43)&&(sparebuf[2] == 0xaa)&&(sparebuf[3] == 0x4e))
 						free_page_flag = 1;
-		
+
 				}
 
 				if(free_page_flag)
@@ -404,12 +416,12 @@ __s32 _read_single_page_spare(struct boot_physical_param *readop,__u8 dma_wait_m
 				    {
 				        NFC_SetDefaultParam(readop->chip, default_value, READ_RETRY_TYPE);
 				    }
-				    
+
 					break;
 				}
 			}
 
-			RetryCount[readop->chip]++;    				    				
+			RetryCount[readop->chip]++;
 		}
 
     	if(k>0)
@@ -461,7 +473,7 @@ __s32 _read_single_page_spare(struct boot_physical_param *readop,__u8 dma_wait_m
 								{
 									if((sparebuf[0] == 0x32)&&(sparebuf[1] == 0x43)&&(sparebuf[2] == 0xaa)&&(sparebuf[3] == 0x4e))
 										free_page_flag = 1;
-		
+
 								}
 
 								if(free_page_flag)
@@ -549,7 +561,7 @@ __s32 _read_single_page_spare(struct boot_physical_param *readop,__u8 dma_wait_m
 				sparebuf[4] = 0xff;
 				sparebuf[5] = 0xff;
 				sparebuf[6] = 0xff;
-				sparebuf[7] = 0xff;			
+				sparebuf[7] = 0xff;
 			}
 			NFC_RandomDisable();
 			if(ret == -ERR_ECC)
@@ -698,7 +710,7 @@ __s32 _read_sectors(struct boot_physical_param *readop,__u8 dma_wait_mode)
 	NFC_SelectChip(readop->chip);
 	NFC_SelectRb(rb);
 
-    if(SUPPORT_READ_RETRY)  
+    if(SUPPORT_READ_RETRY)
     {
         if((READ_RETRY_MODE>=0x10)&&(READ_RETRY_MODE<0x60))  //toshiba & Samsung mode & Sandisk mode & micron mode & intel mode
         {
@@ -720,7 +732,7 @@ __s32 _read_sectors(struct boot_physical_param *readop,__u8 dma_wait_mode)
 				}
 			}
 
-        }    
+        }
         for( k = 0; k<READ_RETRY_CYCLE+1;k++)
 		{
 
@@ -799,7 +811,7 @@ __s32 _read_sectors(struct boot_physical_param *readop,__u8 dma_wait_mode)
 				    {
 				        NFC_SetDefaultParam(readop->chip, default_value, READ_RETRY_TYPE);
 				    }
-				    
+
 					break;
 				}
 			}
@@ -1279,12 +1291,12 @@ __s32 _read_sectors_for_spare(struct boot_physical_param *readop,__u8 dma_wait_m
 						}
 					}
 
-		        }    
+		        }
 		        for( k = 0; k<READ_RETRY_CYCLE+1;k++)
 		    	{
 					if(RetryCount[readop->chip]==(READ_RETRY_CYCLE+1))
 						RetryCount[readop->chip] = 0;
-		    
+
 					if(k>0)
 					{
 					    if(NFC_ReadRetry(readop->chip,RetryCount[readop->chip],READ_RETRY_TYPE))
@@ -1293,7 +1305,7 @@ __s32 _read_sectors_for_spare(struct boot_physical_param *readop,__u8 dma_wait_m
 					        return -1;
 					    }
 					}
-		    			
+
 					if(SUPPORT_RANDOM)
 					{
 						random_seed = _cal_random_seed(readop->page);
@@ -1311,7 +1323,7 @@ __s32 _read_sectors_for_spare(struct boot_physical_param *readop,__u8 dma_wait_m
 						{
 							if((sparebuf[4*i] == 0x32)&&(sparebuf[4*i+1] == 0x43)&&(sparebuf[4*i+2] == 0xaa)&&(sparebuf[4*i+3] == 0x4e))
 								free_page_flag = 1;
-				
+
 						}
 
 						if(free_page_flag)
@@ -1325,8 +1337,8 @@ __s32 _read_sectors_for_spare(struct boot_physical_param *readop,__u8 dma_wait_m
 						NFC_RandomDisable();
 						if(ret1 == -ERR_ECC)
 							ret1 = NFC_Read(cmd_list, (__u8 *)(readop->mainbuf)+i*1024,sparebuf+4*i, dma_wait_mode , NFC_NORMAL_MODE);
-						
-					    	/**************************************************************************************  
+
+					    	/**************************************************************************************
 							* 1. add by Neil, from v2.09
 							* 2. if spare area is all 0xff in random disable mode, it means the page is a clear page
 							* 3. because in toshiba 24nm nand, too many clear pages are not all 0xff
@@ -1379,12 +1391,12 @@ __s32 _read_sectors_for_spare(struct boot_physical_param *readop,__u8 dma_wait_m
 						    {
 						        NFC_SetDefaultParam(readop->chip, default_value, READ_RETRY_TYPE);
 						    }
-					    
+
 							break;
 						}
 					}
 
-					RetryCount[readop->chip]++;    				    				
+					RetryCount[readop->chip]++;
 				}
 
 			    if(k>0)

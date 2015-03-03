@@ -1,32 +1,26 @@
 /*
-************************************************************************************************************************
-*                                                      eNand
-*                                         Nand flash driver logic manage module
-*
-*                             Copyright(C), 2008-2009, SoftWinners Microelectronic Co., Ltd.
-*											       All Rights Reserved
-*
-* File Name : logic_cache.c
-*
-* Author : Richard.x
-*
-* Version : v0.1
-*
-* Date : 2008.03.29
-*
-* Description : This file descripe the cache read / cache write nand interface.
-*
-* Others : None at present.
-*
-*
-* History :
-*
-*  <Author>        <time>       <version>      <description>
-*
-* Richard.x         2008.03.29      0.1          build the file
-*
-************************************************************************************************************************
-*/
+ * (C) Copyright 2007-2013
+ * Allwinner Technology Co., Ltd. <www.allwinnertech.com>
+ * Jerry Wang <wangflord@allwinnertech.com>
+ *
+ * See file CREDITS for list of people who contributed to this
+ * project.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of
+ * the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ * MA 02111-1307 USA
+ */
 #include "../include/nand_logic.h"
 
 //#define CACHE_DBG
@@ -90,21 +84,21 @@ __s32 _flush_w_cache(void)
 		{
 			if(nand_w_cache[i].secbitmap != FULL_BITMAP_OF_LOGIC_PAGE)
 				LML_PageRead(nand_w_cache[i].hit_page,(nand_w_cache[i].secbitmap ^ FULL_BITMAP_OF_LOGIC_PAGE)&FULL_BITMAP_OF_LOGIC_PAGE,nand_w_cache[i].data);
-			
+
 			LML_PageWrite(nand_w_cache[i].hit_page,FULL_BITMAP_OF_LOGIC_PAGE,nand_w_cache[i].data);
-			
+
 
 			/*disable read cache with current page*/
 			if (nand_r_cache.hit_page == nand_w_cache[i].hit_page){
 					nand_r_cache.hit_page = 0xffffffff;
 					nand_r_cache.secbitmap = 0;
 			}
-			
-			
+
+
 			nand_w_cache[i].hit_page = 0xffffffff;
 			nand_w_cache[i].secbitmap = 0;
 			nand_w_cache[i].access_count = 0;
-			
+
 		}
 	}
 
@@ -121,14 +115,14 @@ __s32 _flush_w_cache_simple(__u32 i)
 			LML_PageRead(nand_w_cache[i].hit_page,(nand_w_cache[i].secbitmap ^ FULL_BITMAP_OF_LOGIC_PAGE)&FULL_BITMAP_OF_LOGIC_PAGE,nand_w_cache[i].data);
 
 		LML_PageWrite(nand_w_cache[i].hit_page,FULL_BITMAP_OF_LOGIC_PAGE,nand_w_cache[i].data);
-		
+
 
 		/*disable read cache with current page*/
 		if (nand_r_cache.hit_page == nand_w_cache[i].hit_page){
 				nand_r_cache.hit_page = 0xffffffff;
 				nand_r_cache.secbitmap = 0;
 		}
-		
+
 		nand_w_cache[i].hit_page = 0xffffffff;
 		nand_w_cache[i].secbitmap = 0;
 		nand_w_cache[i].access_count = 0;
@@ -334,7 +328,7 @@ __s32 _fill_nand_cache(__u32 page, __u64 secbitmap, __u8 *pdata)
 					pos = i;
 					access_cnt = nand_w_cache[i].access_count;
 				}
-				
+
 				if((nand_w_cache[i].hit_page == page-1)&&(page>0))
 				{
 				    pos = i;
@@ -421,8 +415,8 @@ __s32 NAND_CacheWrite(__u32 blk, __u32 nblk, void *buf)
 					{
 					    _flush_w_cache_simple(i);
 					}
-					
-					
+
+
 				}
 				/*disable read cache with current page*/
 				if (nand_r_cache.hit_page == page){

@@ -1,14 +1,26 @@
-/*********************************************************************************************************
-*                                                                NAND FLASH DRIVER
-*								(c) Copyright 2008, SoftWinners Co,Ld.
-*                                          			    All Right Reserved
-*file : nand_simple.c
-*description : this file creates some physic basic access function based on single plane for boot .
-*history :
-*	v0.1  2008-03-26 Richard
-* v0.2  2009-9-3 penggang modified for 1615
-*
-*********************************************************************************************************/
+/*
+ * (C) Copyright 2007-2013
+ * Allwinner Technology Co., Ltd. <www.allwinnertech.com>
+ * Jerry Wang <wangflord@allwinnertech.com>
+ *
+ * See file CREDITS for list of people who contributed to this
+ * project.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of
+ * the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ * MA 02111-1307 USA
+ */
 #include "../include/nand_type.h"
 #include "../include/nand_physic.h"
 #include "../include/nand_simple.h"
@@ -54,11 +66,11 @@ static void dumphex32(char* name, char* base, int len)
 
 static void dumpreg()
 {
-	
+
 	dumphex32("nand0 reg", (char*)0x01c03000, 60);
-	
+
 	dumphex32("gpio reg", (char*)0x01c20848, 50);
-	
+
 	dumphex32("dma reg", (char*)0x01c02300, 50);
 
 	dumphex32("clk reg", (char*)0x01c00080, 10);
@@ -449,7 +461,7 @@ __s32 _read_single_page(struct boot_physical_param *readop,__u8 dma_wait_mode)
 					}
 				}
 			}
-        }    
+        }
         for( k = 0; k<READ_RETRY_CYCLE+1;k++)
 		{
 			if(RetryCount[readop->chip]==(READ_RETRY_CYCLE+1))
@@ -528,7 +540,7 @@ __s32 _read_single_page(struct boot_physical_param *readop,__u8 dma_wait_mode)
 				    {
 				        NFC_SetDefaultParam(readop->chip, default_value, READ_RETRY_TYPE);
 				    }
-				    
+
 					break;
 				}
 			}

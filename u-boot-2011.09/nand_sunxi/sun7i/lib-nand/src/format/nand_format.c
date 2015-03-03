@@ -1,34 +1,26 @@
 /*
-************************************************************************************************************************
-*                                                      eNand
-*                                           Nand flash driver format module
-*
-*                             Copyright(C), 2008-2009, SoftWinners Microelectronic Co., Ltd.
-*                                                  All Rights Reserved
-*
-* File Name : nand_format.c
-*
-* Author : Kevin.z
-*
-* Version : v0.1
-*
-* Date : 2008.03.28
-*
-* Description : This file create the logical-physical mapping information on the nand flash.
-*               If the mapping information is exsist already, check and repair it;
-*               If there is none mapping information, create it.
-*
-* Others : None at present.
-*
-*
-* History :
-*
-*  <Author>        <time>       <version>      <description>
-*
-* Kevin.z         2008.03.28      0.1          build the file
-*
-************************************************************************************************************************
-*/
+ * (C) Copyright 2007-2013
+ * Allwinner Technology Co., Ltd. <www.allwinnertech.com>
+ * Jerry Wang <wangflord@allwinnertech.com>
+ *
+ * See file CREDITS for list of people who contributed to this
+ * project.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of
+ * the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ * MA 02111-1307 USA
+ */
 #include "../include/nand_format.h"
 #include "../include/nand_logic.h"
 
@@ -172,7 +164,7 @@ static void _LSBPageTypeTabInit(void)
 					lsb_page[2*i+1] = 0;
 				}
 			}
-			
+
 			for(i=0;i<6;i++)
 			{
 				lsb_page[2*i] = 1;
@@ -190,16 +182,16 @@ static void _LSBPageTypeTabInit(void)
 				else
 					lsb_page[i] = 0;
 			}
-			
+
 			for(i=0;i<6;i++)
 			{
 				lsb_page[i] = 1;
 				lsb_page[PAGE_CNT_OF_PHY_BLK-1-i] = 0;
 			}
-			
+
 		}
 
-	}	
+	}
 
 	DBUG_MSG("[NAND] LSB table:");
 	for(i=0; i<PAGE_CNT_OF_LOGIC_BLK;i++)
@@ -1440,31 +1432,31 @@ static __s32 _GetBlkLogicInfo(struct __ScanDieInfo_t *pDieInfo)
 					if(result==-ERR_ECC)
 					{
 						__u8* temp_mdata_ptr0 = (__u8*)FORMAT_PAGE_BUF;
-						__u8* temp_mdata_ptr1 = (__u8*)((__u32)FORMAT_PAGE_BUF + SECTOR_CNT_OF_SINGLE_PAGE*512); 
-						
+						__u8* temp_mdata_ptr1 = (__u8*)((__u32)FORMAT_PAGE_BUF + SECTOR_CNT_OF_SINGLE_PAGE*512);
+
 						if(((*temp_mdata_ptr0==0x00) && (*(temp_mdata_ptr0+1)==0x00) && (*(temp_mdata_ptr0+2)==0x00) && (*(temp_mdata_ptr0+3)==0x00) && (*(temp_mdata_ptr0+4)==0x00) && (*(temp_mdata_ptr0+5)==0x00))
-							||(SUPPORT_MULTI_PROGRAM && ((*temp_mdata_ptr1==0x00) && (*(temp_mdata_ptr1+1)==0x00) && (*(temp_mdata_ptr1+2)==0x00) && (*(temp_mdata_ptr1+3)==0x00) && (*(temp_mdata_ptr1+4)==0x00) && (*(temp_mdata_ptr1+5)==0x00))))   
+							||(SUPPORT_MULTI_PROGRAM && ((*temp_mdata_ptr1==0x00) && (*(temp_mdata_ptr1+1)==0x00) && (*(temp_mdata_ptr1+2)==0x00) && (*(temp_mdata_ptr1+3)==0x00) && (*(temp_mdata_ptr1+4)==0x00) && (*(temp_mdata_ptr1+5)==0x00))))
 						{
 							tmpBadFlag = 1;
-					
+
 						}
 						else
 						{
 							if((tmpSpare[0].BadBlkFlag != 0xff) || (SUPPORT_MULTI_PROGRAM && (tmpSpare[1].BadBlkFlag != 0xff)))
 							{
 								tmpBadFlag = 1;
-								
+
 							}
 						}
-						
-													
+
+
 					}
 					else
 					{
 						if((tmpSpare[0].BadBlkFlag != 0xff) || (SUPPORT_MULTI_PROGRAM && (tmpSpare[1].BadBlkFlag != 0xff)))
 						{
 							tmpBadFlag = 1;
-						
+
 						}
 					}
 				}
@@ -1474,7 +1466,7 @@ static __s32 _GetBlkLogicInfo(struct __ScanDieInfo_t *pDieInfo)
 	                {
 	                    //set the bad flag of the physical block
 	                    tmpBadFlag = 1;
-						
+
 	                }
 
 				}
@@ -1595,7 +1587,7 @@ static __s32 _FillBlkToZoneTbl(struct __ScanDieInfo_t *pDieInfo, __u16 nLogicInf
     pEraseBlk[1] = 0xffff;
     pEraseBlk[2] = 0xffff;
     pEraseBlk[3] = 0xffff;
-    
+
 
     //check if there is a data block in the data block table already
     if(tmpSuperBlk->PhyBlkNum == 0xffff)
@@ -1692,20 +1684,20 @@ static __s32 _FillBlkToZoneTbl(struct __ScanDieInfo_t *pDieInfo, __u16 nLogicInf
 		{
 			tmpDataEcc = _GetEccFlag(pDieInfo->nDie, tmpDataBlk);
 			tmpNewEcc = _GetEccFlag(pDieInfo->nDie, tmpNewBlk);
-			
+
 			if((tmpDataEcc>=0)&&(tmpNewEcc<0))
 			{
 				*pEraseBlk = tmpNewBlk;
 				PRINT(" two data block, age: tmpData: %x, tmpAgeNew: %x \n", tmpAgeData, tmpAgeNew);
 				PRINT(" new block ecc error, Erase new block %x \n", tmpNewBlk);
-			}	
+			}
 			else if((tmpNewEcc>=0)&&(tmpDataEcc<0))
 			{
 				tmpSuperBlk->PhyBlkNum = tmpNewBlk;
 	            *pEraseBlk = tmpDataBlk;
 				PRINT(" two data block, age: tmpData: %x, tmpAgeNew: %x \n", tmpAgeData, tmpAgeNew);
 				PRINT(" data block ecc error, Erase data block  \n", tmpDataBlk);
-			}	
+			}
 			else
 			{
 				if((tmpAgeData&0xff) == ((tmpAgeNew+2)&0xff))
@@ -1725,9 +1717,9 @@ static __s32 _FillBlkToZoneTbl(struct __ScanDieInfo_t *pDieInfo, __u16 nLogicInf
 				{
 					PRINT("[NAND] Error, two data block with diffrent age: tmpData: %x, tmpAgeNew: %x \n", tmpAgeData, tmpAgeNew);
 					PRINT("logicnum: %x, data block: %x, new block: %x\n", pDieInfo->ZoneInfo[tmpZone].LogBlkTbl[tmpLogPst].LogicBlkNum, tmpDataBlk, tmpNewBlk);
-	
+
 					//while(1);
-	
+
 					if(tmpAgeData>tmpAgeNew)
 					{
 						tmpSuperBlk->PhyBlkNum = tmpNewBlk;
@@ -1759,13 +1751,13 @@ static __s32 _FillBlkToZoneTbl(struct __ScanDieInfo_t *pDieInfo, __u16 nLogicInf
 							PRINT(" Error, two data block, Erase new block with less used page \n");
 						}
 					}
-	
+
 				}
-				
+
 			}
 
 		}
-		
+
 		//updata erase block info
 		if(*pEraseBlk!=0xffff)
 			eraseblockcnt++;
@@ -1802,8 +1794,8 @@ static __s32 _FillBlkToZoneTbl(struct __ScanDieInfo_t *pDieInfo, __u16 nLogicInf
 					{
 						*(pEraseBlk + eraseblockcnt) = tmpNewBlk;
 				  	eraseblockcnt++;
-					}			
-						
+					}
+
 						//while(1);
 				}
 
@@ -1819,7 +1811,7 @@ static __s32 _FillBlkToZoneTbl(struct __ScanDieInfo_t *pDieInfo, __u16 nLogicInf
 					PRINT("[NAND] Error, tmpnewlogflag, log block1 full! tmpLogTypeNew: %x\n", tmpLogTypeNew);
 					PRINT("[NAND] Error, logicblock: %x, old logblk1:%x, new log1: %x! tmpLogTypeNew: %x\n", pDieInfo->ZoneInfo[tmpZone].LogBlkTbl[tmpLogPst].PhyBlk1.PhyBlkNum, tmpNewBlk);
 						//while(1);
-						
+
 					if(_GetEccFlag(pDieInfo->nDie, pDieInfo->ZoneInfo[tmpZone].LogBlkTbl[tmpLogPst].PhyBlk1.PhyBlkNum)<0)
 					{
 						*(pEraseBlk + eraseblockcnt) = pDieInfo->ZoneInfo[tmpZone].LogBlkTbl[tmpLogPst].PhyBlk1.PhyBlkNum;
@@ -1830,8 +1822,8 @@ static __s32 _FillBlkToZoneTbl(struct __ScanDieInfo_t *pDieInfo, __u16 nLogicInf
 					{
 						*(pEraseBlk + eraseblockcnt) = tmpNewBlk;
 				  	eraseblockcnt++;
-					}	
-						
+					}
+
 				}
 			}
 		}
@@ -1864,8 +1856,8 @@ static __s32 _FillBlkToZoneTbl(struct __ScanDieInfo_t *pDieInfo, __u16 nLogicInf
 					{
 						*(pEraseBlk + eraseblockcnt) = tmpDataBlk;
 				  	eraseblockcnt++;
-					}				
-						
+					}
+
 				  //while(1);
 				}
 
@@ -1887,9 +1879,9 @@ static __s32 _FillBlkToZoneTbl(struct __ScanDieInfo_t *pDieInfo, __u16 nLogicInf
 					{
 						*(pEraseBlk + eraseblockcnt) = tmpDataBlk;
 				  	eraseblockcnt++;
-					}		
+					}
 						//while(1);
-					
+
 				}
 			}
 		}
@@ -1900,13 +1892,13 @@ static __s32 _FillBlkToZoneTbl(struct __ScanDieInfo_t *pDieInfo, __u16 nLogicInf
 			tmpLogBlk0 = pDieInfo->ZoneInfo[tmpZone].LogBlkTbl[tmpLogPst].PhyBlk.PhyBlkNum;
 			tmpLogBlk2 = pDieInfo->ZoneInfo[tmpZone].LogBlkTbl[tmpLogPst].PhyBlk2.PhyBlkNum;
 			PRINT("kick valid log block, tmpLogBlk0 %x, tmpLogBlk2 %x\n", tmpLogBlk0, tmpLogBlk2);
-			
+
 			if(_GetEccFlag(pDieInfo->nDie, tmpLogBlk2)<0)
 			{
 				pDieInfo->ZoneInfo[tmpZone].LogBlkTbl[tmpLogPst].PhyBlk2.PhyBlkNum = 0xffff;
 		    *(pEraseBlk + eraseblockcnt) = tmpLogBlk2;
-				 eraseblockcnt++; 
-			}	
+				 eraseblockcnt++;
+			}
 			else if(_GetEccFlag(pDieInfo->nDie, tmpLogBlk0)<0)
 			{
 				pDieInfo->ZoneInfo[tmpZone].LogBlkTbl[tmpLogPst].PhyBlk.PhyBlkNum = tmpLogBlk2;
@@ -1918,22 +1910,22 @@ static __s32 _FillBlkToZoneTbl(struct __ScanDieInfo_t *pDieInfo, __u16 nLogicInf
 			{
 				tmpAge0 = _GetLogAge(pDieInfo->nDie, tmpLogBlk0);
 				tmpAge2 = _GetLogAge(pDieInfo->nDie, tmpLogBlk2);
-	
+
 				PRINT("kick valid log block, tmpAge0 %x, tmpAge2 %x\n", tmpAge0, tmpAge2);
-	
+
 				if(COMPARE_AGE(tmpAge0, tmpAge2) == 0)  //move merge stop
 				{
 					tmpLastPage0 = _GetLastUsedPage(pDieInfo->nDie, tmpLogBlk0, SUPPORT_LOG_BLOCK_MANAGE&LSB_TYPE);
 					tmpLastPage2 = _GetLastUsedPage(pDieInfo->nDie, tmpLogBlk2, SUPPORT_LOG_BLOCK_MANAGE&LSB_TYPE);
-	
+
 					if(tmpLastPage0 < tmpLastPage2)
 			        {
 			            //replace the the data block with the new block, because the new page has more used pages
 			            pDieInfo->ZoneInfo[tmpZone].LogBlkTbl[tmpLogPst].PhyBlk.PhyBlkNum = tmpLogBlk2;
 						pDieInfo->ZoneInfo[tmpZone].LogBlkTbl[tmpLogPst].PhyBlk2.PhyBlkNum = 0xffff;
 			      *(pEraseBlk + eraseblockcnt) = tmpLogBlk0;
-					  eraseblockcnt++;     
-					   
+					  eraseblockcnt++;
+
 						PRINT(" log age the same, Erase tmpLogBlk0 \n");
 			        }
 			        else
@@ -1941,7 +1933,7 @@ static __s32 _FillBlkToZoneTbl(struct __ScanDieInfo_t *pDieInfo, __u16 nLogicInf
 			            //the new block has less pages than the data block
 			            pDieInfo->ZoneInfo[tmpZone].LogBlkTbl[tmpLogPst].PhyBlk2.PhyBlkNum = 0xffff;
 			            *(pEraseBlk + eraseblockcnt) = tmpLogBlk2;
-					  			eraseblockcnt++; 
+					  			eraseblockcnt++;
 						PRINT(" log age the same, Erase tmpLogBlk0 \n");
 			        }
 				}
@@ -1949,13 +1941,13 @@ static __s32 _FillBlkToZoneTbl(struct __ScanDieInfo_t *pDieInfo, __u16 nLogicInf
 				{
 					pDieInfo->ZoneInfo[tmpZone].LogBlkTbl[tmpLogPst].PhyBlk2.PhyBlkNum = 0xffff;
 			    *(pEraseBlk + eraseblockcnt) = tmpLogBlk2;
-					  			eraseblockcnt++; 
+					  			eraseblockcnt++;
 					PRINT(" Error, log age diff, Erase tmpLogBlk2 \n");
 				}
-				
-			}	
 
-			
+			}
+
+
 
 		}
 		return 0;
@@ -2511,13 +2503,13 @@ static __s32 _RepairLogBlkTbl(struct __ScanDieInfo_t *pDieInfo)
 					        {
 					            //find a free block in the table block area
 					            if(_VirtualFreeBlockCheck(pDieInfo->nDie, tmpFreeBlock)==0)
-					            {	
+					            {
 						            //pDieInfo->pPhyBlk[tmpFreeBlock] = pDieInfo->pPhyBlk[tmpLogTbl->PhyBlk.PhyBlkNum];
 						            pDieInfo->pPhyBlk[tmpFreeBlock] = NULL_BLOCK_INFO;
 						            pDieInfo->nFreeCnt--;
-												
+
 												break;
-											}	
+											}
 					        }
 					    }
 
@@ -2572,10 +2564,10 @@ static __s32 _RepairLogBlkTbl(struct __ScanDieInfo_t *pDieInfo)
 						            	//pDieInfo->pPhyBlk[tmpFreeBlock] = pDieInfo->pPhyBlk[tmpLogBlock];
 										pDieInfo->pPhyBlk[tmpFreeBlock] = NULL_BLOCK_INFO;
 						            	pDieInfo->nFreeCnt--;
-									
+
 													break;
-						            }	
-						            
+						            }
+
 						        }
 						    }
 
@@ -3012,24 +3004,24 @@ static __s32 _FillZoneTblInfo(struct __ScanDieInfo_t *pDieInfo)
 	                //erase the virtual block failed, the block is a bad block, need write bad block flag
 	                pDieInfo->pPhyBlk[tmpBlkErase[i]] = BAD_BLOCK_INFO;
 	                _WriteBadBlkFlag(pDieInfo->nDie, tmpBlkErase[i]);
-	
+
 	                //continue;
 	            }
-	
+
 	            //the block will be a new free block, modify the logical information
 	            pDieInfo->pPhyBlk[tmpBlkErase[i]] = FREE_BLOCK_INFO;
 	            pDieInfo->nFreeCnt++;
-	
+
 	            //continue;
 	        }
 	        else
-	        	break; 
-	        
+	        	break;
+
         }
-        
+
         continue;
-        
-        
+
+
     }
 
 #if DBG_DUMP_DIE_INFO
@@ -3723,7 +3715,7 @@ __s32 NandHwInit(void)
 //		NAND_DRV_PHYSIC_LAYER_DATE_HOUR, NAND_DRV_PHYSIC_LAYER_MINUTE);
 
 	FORMAT_DBG("%s: Start Nand Hardware initializing .....\n", __func__);
-	
+
 	val[0] = NAND_VERSION_0;
 	val[1] = NAND_VERSION_1;
 	val[2] = NAND_DRV_DATE;
@@ -3765,7 +3757,7 @@ __s32 NandHwInit(void)
 		FORMAT_ERR("[ERR]%s: LML_Init() failed!\n", __func__);
 		goto ERR_RET;
 	}
-	
+
 #if 0
 	MEMSET(&aw_nand_info, 0x0, sizeof(struct _nand_info));
 
@@ -3784,15 +3776,15 @@ __s32 NandHwInit(void)
 	aw_nand_info.ChipNum = LogicArchiPar.LogicDieCnt;
 	aw_nand_info.PageNumsPerBlk = LogicArchiPar.PageCntPerLogicBlk;
 	aw_nand_info.FullBitmap = FULL_BITMAP_OF_SUPER_PAGE;
-	
+
 	if (SUPPORT_USE_MAX_BLK_ERASE_CNT)
 		aw_nand_info.MaxBlkEraseTimes = MaxBlkEraseTimes;
 	else
 		aw_nand_info.MaxBlkEraseTimes = 2000;
-		
+
 	if (SUPPORT_READ_RECLAIM)
 		aw_nand_info.EnableReadReclaim = 1;
-	else 
+	else
 		aw_nand_info.EnableReadReclaim = 0;
 #endif
 

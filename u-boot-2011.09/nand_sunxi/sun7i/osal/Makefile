@@ -1,6 +1,6 @@
 #
-# (C) Copyright 2006
-# Wolfgang Denk, DENX Software Engineering, wd@denx.de.
+# (C) Copyright 2008
+# Jerry Wang, Allwinnertech Software Engineer, wangflord@allwinnertech.com.
 #
 # See file CREDITS for list of people who contributed to this
 # project.

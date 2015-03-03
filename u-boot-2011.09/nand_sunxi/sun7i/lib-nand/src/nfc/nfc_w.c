@@ -1,14 +1,26 @@
-/*********************************************************************************
-*                                           NAND FLASH DRIVER
-*								(c) Copyright 2008, SoftWinners Co,Ld.
-*                                          All Right Reserved
-*file : nfc_w.c
-*description : this file provides some physic functions for upper nand driver layer.
-*history :
-*	v0.1  2008-03-26 Richard
-*	        offer direct accsee method to nand flash control machine.
-*   v0.2  2009.09.09 penggang
-**********************************************************************************/
+/*
+ * (C) Copyright 2007-2013
+ * Allwinner Technology Co., Ltd. <www.allwinnertech.com>
+ * Jerry Wang <wangflord@allwinnertech.com>
+ *
+ * See file CREDITS for list of people who contributed to this
+ * project.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of
+ * the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ * MA 02111-1307 USA
+ */
 #include "../include/nfc.h"
 
 extern __u32 pagesize;
@@ -83,7 +95,7 @@ __s32 NFC_GetUniqueId(NFC_CMD_LIST  *idcmd ,__u8 *idbuf)
     nfc_repeat_mode_disable();
 	_exit_nand_critical();
 	return ret;
-	
+
 }
 
 /*******************************************************************************
@@ -230,7 +242,7 @@ __s32 NFC_Write_Seq( NFC_CMD_LIST  *wcmd, void *mainbuf, void *sparebuf,  __u8 d
 	cur_cmd = cur_cmd->next;
 	program_cmd = cur_cmd->value;
 
-	
+
 	//access NFC internal RAM by DMA bus
 	NFC_WRITE_REG(NFC_REG_CTL, (NFC_READ_REG(NFC_REG_CTL)) | NFC_RAM_METHOD);
 
@@ -277,11 +289,11 @@ __s32 NFC_Write_Seq( NFC_CMD_LIST  *wcmd, void *mainbuf, void *sparebuf,  __u8 d
 	//cfg |= (NFC_SEND_ADR | NFC_ACCESS_DIR | NFC_DATA_TRANS | NFC_SEND_CMD | NFC_WAIT_FLAG | NFC_DATA_SWAP_METHOD);
 	cfg |= (NFC_SEND_ADR | NFC_ACCESS_DIR | NFC_DATA_TRANS | NFC_SEND_CMD1 | NFC_SEND_CMD2 | NFC_DATA_SWAP_METHOD);
 	cfg |= ((__u32)0x2 << 30);//page command
-	
+
 
 	/*enable ecc*/
 	_enable_ecc(1);
-	
+
 	/*set ecc to specified ecc*/
     ecc_mode_temp = (NFC_READ_REG(NFC_REG_ECC_CTL) & 0xf000)>>12;
 	if(ecc_mode_temp>=4)  //change for hynix 2y nm flash
@@ -289,7 +301,7 @@ __s32 NFC_Write_Seq( NFC_CMD_LIST  *wcmd, void *mainbuf, void *sparebuf,  __u8 d
 	else//change for hynix 2x nm flash
 		ecc_set = 0x1;
 	NFC_WRITE_REG(NFC_REG_ECC_CTL, ((NFC_READ_REG(NFC_REG_ECC_CTL) & (~NFC_ECC_MODE))|(ecc_set<<12) ));
-	
+
 	NFC_WRITE_REG(NFC_REG_CMD,cfg);
 
     NAND_WaitDmaFinish();
@@ -309,7 +321,7 @@ __s32 NFC_Write_Seq( NFC_CMD_LIST  *wcmd, void *mainbuf, void *sparebuf,  __u8 d
 
 	/*disable ecc*/
 	_disable_ecc();
-	
+
 	/*set ecc to original value*/
 	NFC_WRITE_REG(NFC_REG_ECC_CTL, (NFC_READ_REG(NFC_REG_ECC_CTL) & (~NFC_ECC_MODE))|(ecc_mode_temp<<12));
 
@@ -595,7 +607,7 @@ __s32 _read_in_page_mode_seq(NFC_CMD_LIST  *rcmd,void *mainbuf,void *sparebuf,__
 
 	/*enable ecc*/
 	_enable_ecc(1);
-	
+
 	/*set ecc to specified ecc*/
     ecc_mode_temp = (NFC_READ_REG(NFC_REG_ECC_CTL) & 0xf000)>>12;
 	if(ecc_mode_temp>=4)  //change for hynix 2y nm flash
@@ -603,7 +615,7 @@ __s32 _read_in_page_mode_seq(NFC_CMD_LIST  *rcmd,void *mainbuf,void *sparebuf,__
 	else//change for hynix 2x nm flash
 		ecc_set = 0x1;
 	NFC_WRITE_REG(NFC_REG_ECC_CTL, ((NFC_READ_REG(NFC_REG_ECC_CTL) & (~NFC_ECC_MODE))|(ecc_set<<12) ));
-	
+
 
 	NFC_WRITE_REG(NFC_REG_CMD,cfg);
 
@@ -830,7 +842,7 @@ __s32 _read_in_page_mode_spare(NFC_CMD_LIST  *rcmd,void *mainbuf,void *sparebuf,
 	_enable_ecc(1);
 	NFC_WRITE_REG(NFC_REG_CMD,cfg);
 
-    NAND_WaitDmaFinish();// 
+    NAND_WaitDmaFinish();//
 
 	ret = _wait_dma_end(0, (__u32)mainbuf, 2048);
 	if (ret)
@@ -927,7 +939,7 @@ __s32 LSB_GetDefaultParam(__u32 chip,__u8* default_value, __u32 read_retry_type)
 {
 
 	return 0;
-	
+
 }
 
 __s32 LSB_SetDefaultParam(__u32 chip,__u8* default_value, __u32 read_retry_type)
@@ -937,17 +949,17 @@ __s32 LSB_SetDefaultParam(__u32 chip,__u8* default_value, __u32 read_retry_type)
 }
 
 __s32 NFC_LSBEnable(__u32 chip, __u32 read_retry_type)
-{   
+{
     return 0;
 }
 
 __s32 NFC_LSBDisable(__u32 chip, __u32 read_retry_type)
-{   
+{
     return 0;
 }
 
 __s32 NFC_LSBExit(__u32 read_retry_type)
-{   
+{
 	return 0;
 }
 

@@ -1,3 +1,26 @@
+/*
+ * (C) Copyright 2007-2013
+ * Allwinner Technology Co., Ltd. <www.allwinnertech.com>
+ * Jerry Wang <wangflord@allwinnertech.com>
+ *
+ * See file CREDITS for list of people who contributed to this
+ * project.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of
+ * the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ * MA 02111-1307 USA
+ */
 #ifndef __NAND_OSAL_H__
 #define __NAND_OSAL_H__
 
@@ -5,31 +28,31 @@
 
 #ifndef __int64
 	#define __int64 __u64
-#endif	
+#endif
 #ifndef uchar
 typedef unsigned char   uchar;
-#endif	
+#endif
 #ifndef uint16
 typedef unsigned short  uint16;
-#endif	
+#endif
 #ifndef uint32
 typedef unsigned int    uint32;
-#endif	
+#endif
 #ifndef sint32
 typedef  int            sint32;
-#endif	
+#endif
 #ifndef uint64
 typedef __int64         uint64;
-#endif	
+#endif
 #ifndef sint16
 typedef short           sint16;
-#endif	
+#endif
 #ifndef UINT8
 typedef unsigned char   UINT8;
-#endif	
+#endif
 #ifndef UINT32
 typedef unsigned int    UINT32;
-#endif	
+#endif
 #ifndef SINT32
 typedef  signed int     SINT32;
 #endif
@@ -48,7 +71,7 @@ typedef  signed int     SINT32;
 #define __OS_NAND_SUPPORT_DMA_INT__
 #ifdef __OS_NAND_SUPPORT_DMA_INT__
     #define __OS_NAND_SUPPORT_INT__
-#endif    
+#endif
 
 #define __FPGA_TEST__
 
@@ -126,7 +149,7 @@ extern void NAND_ShowEnv(__u32 type, char *name, __u32 len, __u32 *val);
 #define FREE(x,size)                    	NAND_Free((x),(size))
 
 //define the message print interface
-#define PRINT(...)							NAND_Print(__VA_ARGS__)	
+#define PRINT(...)							NAND_Print(__VA_ARGS__)
 
 #define DBUG_MSG(...)
 
