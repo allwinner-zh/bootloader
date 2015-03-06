@@ -1,0 +1,37 @@
+
+#�������������
+BSP_PATH = bsp_for_a20
+ARCH     = sun7i
+ARM_CROSS_TOOL = ARMCC_CROSSTOOL
+export
+
+include make.cfg
+
+#��������Ŀ¼�еõ�Դ������б�
+SRCCS=$(foreach dir,$(SRCDIRS),$(wildcard $(dir)/*.c))
+SRCSS=$(foreach dir,$(SRCDIRS),$(wildcard $(dir)/*.s))
+
+#�õ�Դ�����Ӧ��Ŀ���ļ����б�
+OBJS=$(SRCCS:.c=.o) $(SRCSS:.s=.o)
+
+
+#�������Ŀ���ļ�
+all:$(LOCALTARGET)
+	$(LOAD) $(LDFLAGS) $(TMPTARGET) $(LOCALTARGET)
+	-$(WORKTOOLS)/gen_check_code.exe $(TMPTARGET) fes1_$(ARCH).bin
+	-cp fes1_$(ARCH).bin $(TARGET)
+	-cp fes1_$(ARCH).bin $(TARGET1)
+	-rm $(OBJS) $(TMPTARGET) fes1_$(ARCH).bin
+	@echo ----------------------------
+	@echo target make finish
+	@echo ----------------------------
+
+#���ɱ���Ŀ���ļ�
+$(LOCALTARGET):$(OBJS)
+	$(LINK) $(LKFLAGS) -o $@ $(filter %.o ,$+) $(LIBS)
+
+
+# ɾ�����ɵ��м��ļ�
+clean:
+	-rm $(OBJS) $(LOCALTARGET) $(TEMPTARGET) fes1.bin
+

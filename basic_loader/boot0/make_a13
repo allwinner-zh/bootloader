@@ -1,0 +1,14 @@
+
+BSP_PATH = bsp_for_a13
+ARCH     = sun5i
+ARM_CROSS_TOOL = ARMCC_CROSSTOOL_A8
+export
+
+all:
+	make -f make_nand  clean;make -f make_nand
+	make -f make_sdmmc clean;make -f make_sdmmc
+	make -f make_spinor clean;make -f make_spinor
+
+clean:
+	make -f make_nand    	clean
+	make -f make_sdmmc		clean

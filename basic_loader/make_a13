@@ -1,0 +1,3 @@
+all:
+	make -f make_a13 clean -C boot0; make -f make_a13  -C boot0
+	make -f make_a13 clean -C fes1; make -f make_a13  -C fes1

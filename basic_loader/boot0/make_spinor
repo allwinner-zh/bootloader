@@ -1,0 +1,33 @@
+
+#导入编译器配置
+STORAGE_MEDIA_TYPE = STORAGE_SPINOR
+
+include make.cfg
+
+#从所有子目录中得到源代码的列表
+SRCCS=$(foreach dir,$(SRCDIRS),$(wildcard $(dir)/*.c))
+SRCSS=$(foreach dir,$(SRCDIRS),$(wildcard $(dir)/*.s))
+
+#得到源代码对应的目标文件的列表
+OBJS=$(SRCCS:.c=.o) $(SRCSS:.s=.o)
+
+
+#生成输出目标文件
+nand:$(LOCALTARGET)
+	$(LOAD) $(LDFLAGS) $(TMPTARGET) $(LOCALTARGET)
+	-$(WORKTOOLS)/gen_check_code.exe $(TMPTARGET) boot0_$(ARCH).bin
+	cp boot0_$(ARCH).bin $(TARGET)
+	-rm $(OBJS) $(TMPTARGET)
+	@echo ----------------------------
+	@echo target make finish
+	@echo ----------------------------
+
+#生成本地目标文件
+$(LOCALTARGET):$(OBJS)
+	$(LINK) $(LKFLAGS) -o $@ $(filter %.o ,$+) $(LIBS)
+
+
+# 删除生成的中间文件
+clean:
+	-rm $(OBJS) $(LOCALTARGET) $(TMPTARGET) boot0_$(ARCH).bin
+

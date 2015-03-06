@@ -1,0 +1,3 @@
+basic loader for sunxi serial Soc, such as A13, A20, A31, ....
+
+the project should compared with ARMCC, and the makefile run on the cygwin shell.
