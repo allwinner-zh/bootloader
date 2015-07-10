@@ -1,14 +1,11 @@
-/*********************************************************************************************************
-*                                                                NAND FLASH DRIVER
-*								(c) Copyright 2008, SoftWinners Co,Ld.
-*                                          			    All Right Reserved
-*file : nand_simple.c
-*description : this file creates some physic basic access function based on single plane for boot .
-*history :
-*	v0.1  2008-03-26 Richard
-* v0.2  2009-9-3 penggang modified for 1615
-*
-*********************************************************************************************************/
+/*
+ * Copyright (C) 2013 Allwinnertech
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
 #include "../include/nand_type.h"
 #include "../include/nand_physic.h"
 #include "../include/nand_simple.h"
@@ -410,7 +407,7 @@ __s32 _read_single_page(struct boot_physical_param *readop,__u8 dma_wait_mode)
 					NFC_ReadRetryInit(READ_RETRY_TYPE);
 				}
 			}
-        }    
+        }
         for( k = 0; k<READ_RETRY_CYCLE+1;k++)
 		{
 			if(RetryCount[readop->chip]==(READ_RETRY_CYCLE+1))
@@ -478,7 +475,7 @@ __s32 _read_single_page(struct boot_physical_param *readop,__u8 dma_wait_mode)
 				    {
 				        NFC_SetDefaultParam(readop->chip, default_value, READ_RETRY_TYPE);
 				    }
-				    
+
 					break;
 				}
 			}

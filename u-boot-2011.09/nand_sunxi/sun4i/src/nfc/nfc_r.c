@@ -1,14 +1,11 @@
-/*********************************************************************************
-*                                           NAND FLASH DRIVER
-*								(c) Copyright 2008, SoftWinners Co,Ld.
-*                                          All Right Reserved
-*file : nfc_r.c
-*description : this file provides some physic functions for upper nand driver layer.
-*history :
-*	v0.1  2008-03-26 Richard
-*	        offer direct accsee read method to nand flash control machine.
-*   v0.2  2009.09.09 penggang
-**********************************************************************************/
+/*
+ * Copyright (C) 2013 Allwinnertech
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
 #include "../include/nfc.h"
 
 __u32	nand_board_version;
@@ -97,7 +94,7 @@ const	__s16 param0x30high[20][2] ={{0x00,0XF0},
 									{0x0D,0XB0},
 									{0x0C,0XA0}
 									};
-const	__s16 param0x40[10] = {0x0,0x0,0x0,0x1,0x2,0x3,0x04,0x05,0x06,0x07};						
+const	__s16 param0x40[10] = {0x0,0x0,0x0,0x1,0x2,0x3,0x04,0x05,0x06,0x07};
 
 __u32 ddr_param[8];
 
@@ -968,8 +965,8 @@ __s32 _vender_set_param(__u8 *para, __u8 *addr, __u32 count)
     else
     {
         return -1;
-    }  
-    
+    }
+
     for(i=0; i<count; i++)
 	{
 	    if((read_retry_mode >=0x20)&&(read_retry_mode <0x30)) //samsung mode
@@ -996,14 +993,14 @@ __s32 _vender_set_param(__u8 *para, __u8 *addr, __u32 count)
     		NFC_WRITE_RAM_B(NFC_RAM0_BASE+2, 0x0);
 				NFC_WRITE_RAM_B(NFC_RAM0_BASE+3, 0x0);
     		NFC_WRITE_REG(NFC_REG_CNT, 4);
-    		
+
     		/*set NFC_REG_CMD*/
     		cfg = cmd_w;
     		cfg |= (NFC_SEND_ADR | NFC_DATA_TRANS | NFC_ACCESS_DIR | NFC_SEND_CMD1 | NFC_WAIT_FLAG);
     		_set_addr(&addr[i], 1);
     		NFC_WRITE_REG(NFC_REG_CMD, cfg);
-	    	
-	    	
+
+
 	    }
 	    else //hynix & toshiba mode
 	    {
@@ -1105,7 +1102,7 @@ __s32 _vender_pre_condition(void)
 		{
 			cmd[0] = 0x3B;
 			cmd[1] = 0xB9;
-		}	
+		}
 		for(i=0;i<2;i++)
         {
         	/*set NFC_REG_CMD*/
@@ -1361,17 +1358,17 @@ __s32 NFC_ReadRetry(__u32 chip, __u32 retry_count, __u32 read_retry_type)
     {
         for(i=0; i<read_retry_reg_num; i++)
             param[i] = (__u8)read_retry_val[retry_count][i];
-            
+
         ret =_vender_set_param(&param[0], &read_retry_reg_adr[0], read_retry_reg_num);
     }
 	else if((read_retry_mode>=0x30)&&(read_retry_mode<0x40))  //for sandisk readretry mode
     {
         nand_clk_bak = NAND_GetClk();
         NAND_SetClk(10);
-        
+
         if(retry_count == 1)
             _vender_pre_condition();
-        
+
         for(i=0; i<read_retry_reg_num; i++)
             param[i] = 0x0;
 		if(read_retry_cycle==16)
@@ -1387,14 +1384,14 @@ __s32 NFC_ReadRetry(__u32 chip, __u32 retry_count, __u32 read_retry_type)
 
 		}
         ret =_vender_set_param(&param[0], &read_retry_reg_adr[0], read_retry_reg_num);
-        
+
         NAND_SetClk(nand_clk_bak);
     }
 	else if((read_retry_mode>=0x40)&&(read_retry_mode<0x50))  //for micron readretry mode
 	{
 		for(i=0; i<read_retry_reg_num; i++)
             param[i] = (__u8)read_retry_val[retry_count-1][i];
-            
+
         ret =_vender_set_param(&param[0], &read_retry_reg_adr[0], read_retry_reg_num);
 
 	}
@@ -1496,7 +1493,7 @@ __s32 NFC_ReadRetryInit(__u32 read_retry_type)
 			{
 				read_retry_val[i][j] = para0x20[i][j];
 			}
-			
+
 		}
 	}
 	else if(read_retry_mode == 0x30) //mode0x30 Sandisk mode
@@ -1521,7 +1518,7 @@ __s32 NFC_ReadRetryInit(__u32 read_retry_type)
 			{
 				read_retry_val[i][j] = param0x40[i];
 			}
-			
+
 		}
 	}
 	return 0;
@@ -1589,20 +1586,20 @@ __s32 NFC_GetDefaultParam(__u32 chip,__u8* default_value, __u32 read_retry_type)
 
 __s32 NFC_SetDefaultParam(__u32 chip,__u8* default_value,__u32 read_retry_type)
 {
-    __s32 ret; 
-    __u32 i,cfg,nand_clk_bak; 
-    
+    __s32 ret;
+    __u32 i,cfg,nand_clk_bak;
+
     if(read_retry_mode<0x10)  //hynix read retry mode
     {
         for(i=0; i<read_retry_reg_num; i++)
         {
             if((read_retry_mode == 0x0)||(read_retry_mode == 0x1))
                 default_value[i] = read_retry_default_val[chip][i];
-            else if((read_retry_mode == 0x2)||(read_retry_mode == 0x3))   
+            else if((read_retry_mode == 0x2)||(read_retry_mode == 0x3))
                 default_value[i] = hynix_read_retry_otp_value[chip][0][i];
         }
         ret =_vender_set_param(default_value, &read_retry_reg_adr[0], read_retry_reg_num);
-        
+
     	return ret;
     }
     else if((read_retry_mode>=0x20)&&(read_retry_mode<0x30))  //samsung read retry mode
@@ -1612,7 +1609,7 @@ __s32 NFC_SetDefaultParam(__u32 chip,__u8* default_value,__u32 read_retry_type)
             default_value[i] = (__u8)read_retry_val[0][i];
         }
         ret =_vender_set_param(default_value, &read_retry_reg_adr[0], read_retry_reg_num);
-        
+
     	return ret;
     }
 	else if((read_retry_mode>=0x30)&&(read_retry_mode<0x40))  //sandisk read retry mode
@@ -1625,10 +1622,10 @@ __s32 NFC_SetDefaultParam(__u32 chip,__u8* default_value,__u32 read_retry_type)
         {
             default_value[i] = 0x0;
         }
-		
+
 		ret |= _vender_set_param(default_value,&read_retry_reg_adr[0],read_retry_reg_num);
 
-		cfg = 0xD6; 
+		cfg = 0xD6;
 		cfg |= ( NFC_SEND_CMD1);
 		NFC_WRITE_REG(NFC_REG_CMD, cfg);
 
@@ -1636,7 +1633,7 @@ __s32 NFC_SetDefaultParam(__u32 chip,__u8* default_value,__u32 read_retry_type)
 		ret |= _wait_cmd_finish();
 
 		NAND_SetClk(nand_clk_bak);
-		
+
 		if(ret)
 		{
 			_exit_nand_critical();
@@ -1650,16 +1647,16 @@ __s32 NFC_SetDefaultParam(__u32 chip,__u8* default_value,__u32 read_retry_type)
             default_value[i] = 0x0;
         }
         ret =_vender_set_param(default_value, &read_retry_reg_adr[0], read_retry_reg_num);
-        
+
     	return ret;
     }
-	
+
 	else
     {
         return 0;
     }
-        
-    
+
+
 }
 
 
@@ -1668,14 +1665,14 @@ __s32 NFC_ReadRetry_off(__u32 chip) //sandisk readretry exit
 	__u32 cfg;
     __s32 ret = 0;
 	__u8 default_value[64];
-	
+
 	cfg = 0xD6;
 	cfg |= ( NFC_SEND_CMD1);
 	NFC_WRITE_REG(NFC_REG_CMD, cfg);
 
 	ret = _wait_cmdfifo_free();
 	ret |= _wait_cmd_finish();
-	
+
 	if(ret)
 	{
 		_exit_nand_critical();

@@ -1,24 +1,12 @@
 /*
- *================================================================================================
+ * Copyright (C) 2013 Allwinnertech
  *
- *                                            Aone project ---- tools
- *
- *                             Copyright(C), 2006-2008, Microelectronic Co., Ltd.
- *											       All Rights Reserved
- *
- * File Name :  MBR.h
- *
- * Author : javen
- *
- * Version : 1.0
- *
- * Date : 2008.12.02
- *
- * Description :
- *
- * History :
- *================================================================================================
-*/
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+
 
 #ifndef    __ND_MBR_H__
 #define    __ND_MBR_H__

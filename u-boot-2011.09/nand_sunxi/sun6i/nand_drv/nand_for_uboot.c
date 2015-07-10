@@ -1,3 +1,11 @@
+/*
+ * Copyright (C) 2013 Allwinnertech
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
 #include <common.h>
 #include <asm/arch/nand_bsp.h>
 #include <malloc.h>
@@ -239,7 +247,7 @@ int NAND_PhyInit(void)
 		OSAL_printf("NB1 : nand scan fail\n");
 		return ret;
 	}
-	
+
 	 //modify ValidBlkRatio
 	ret = script_parser_fetch("nand0_para","good_block_ratio", &nand_good_block_ratio, sizeof(int));
 	if (ret)
@@ -249,7 +257,7 @@ int NAND_PhyInit(void)
 	else
 	{
 		printk("[NAND] set nand_good_block_ratio %d \n",nand_good_block_ratio);
-		
+
 		if((nand_good_block_ratio >= 400)&&(nand_good_block_ratio <= 960))
 		{
 			printk("nand good block ratio value is valid \n");
@@ -257,10 +265,10 @@ int NAND_PhyInit(void)
 		}
 		else
 			printk("nand good block ratio value is invalid \n");
-		
-	}	
 
-	
+	}
+
+
 	//modify ValidBlkRatio
     //NAND_SetValidBlkRatio(nand_good_blk_ratio);
 

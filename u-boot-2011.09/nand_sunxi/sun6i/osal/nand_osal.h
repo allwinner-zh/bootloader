@@ -1,3 +1,11 @@
+/*
+ * Copyright (C) 2013 Allwinnertech
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
 #ifndef __NAND_OSAL_H__
 #define __NAND_OSAL_H__
 
@@ -15,7 +23,7 @@
 #define __OS_NAND_SUPPORT_DMA_INT__
 #ifdef __OS_NAND_SUPPORT_DMA_INT__
     #define __OS_NAND_SUPPORT_INT__
-#endif    
+#endif
 
 #define __FPGA_TEST__
 
@@ -67,7 +75,7 @@ extern __u32 NAND_GetIOBaseAddrCH1(void);
 #define FREE(x,size)                    	NAND_Free((x),(size))
 
 //define the message print interface
-#define PRINT(...)							NAND_Print(__VA_ARGS__)	
+#define PRINT(...)							NAND_Print(__VA_ARGS__)
 
 
 

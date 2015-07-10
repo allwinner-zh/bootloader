@@ -1,3 +1,11 @@
+/*
+ * Copyright (C) 2013 Allwinnertech
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
 #ifndef __NAND_OSAL_H__
 #define __NAND_OSAL_H__
 
@@ -5,31 +13,31 @@
 
 #ifndef __int64
 	#define __int64 __u64
-#endif	
+#endif
 #ifndef uchar
 typedef unsigned char   uchar;
-#endif	
+#endif
 #ifndef uint16
 typedef unsigned short  uint16;
-#endif	
+#endif
 #ifndef uint32
 typedef unsigned int    uint32;
-#endif	
+#endif
 #ifndef sint32
 typedef  int            sint32;
-#endif	
+#endif
 #ifndef uint64
 typedef __int64         uint64;
-#endif	
+#endif
 #ifndef sint16
 typedef short           sint16;
-#endif	
+#endif
 #ifndef UINT8
 typedef unsigned char   UINT8;
-#endif	
+#endif
 #ifndef UINT32
 typedef unsigned int    UINT32;
-#endif	
+#endif
 #ifndef SINT32
 typedef  signed int     SINT32;
 #endif
@@ -48,7 +56,7 @@ typedef  signed int     SINT32;
 #define __OS_NAND_SUPPORT_DMA_INT__
 #ifdef __OS_NAND_SUPPORT_DMA_INT__
     #define __OS_NAND_SUPPORT_INT__
-#endif    
+#endif
 
 #define __FPGA_TEST__
 
@@ -131,7 +139,7 @@ extern int NAND_IS_Secure_sys(void);
 #define FREE(x,size)                    	NAND_Free((x),(size))
 
 //define the message print interface
-#define PRINT(...)							NAND_Print(__VA_ARGS__)	
+#define PRINT(...)							NAND_Print(__VA_ARGS__)
 #define PRINT_DBG(...)								NAND_Print_DBG(__VA_ARGS__)
 
 

@@ -1,3 +1,11 @@
+/*
+ * Copyright (C) 2013 Allwinnertech
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
 #include <common.h>
 #include <asm/arch/nand_bsp.h>
 #include <malloc.h>
@@ -253,7 +261,7 @@ int NAND_PhyInit(void)
 			{
 				printk("[NAND] nand_good_block_ratio is 0,then use default value \n");
 			}
-	}	
+	}
 
 	OSAL_printf("NB1 : nand phy init ok\n");
 	return(PHY_ChangeMode(1));

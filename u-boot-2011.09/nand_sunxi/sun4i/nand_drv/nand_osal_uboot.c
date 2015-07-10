@@ -1,23 +1,12 @@
 /*
-**********************************************************************************************************************
-*											        eGon
-*						           the Embedded GO-ON Bootloader System
-*									       eGON arm boot sub-system
-*
-*						  Copyright(C), 2006-2010, SoftWinners Microelectronic Co., Ltd.
-*                                           All Rights Reserved
-*
-* File    : nand_osal_boot0.c
-*
-* By      : Jerry
-*
-* Version : V2.00
-*
-* Date	  :
-*
-* Descript:
-**********************************************************************************************************************
-*/
+ * Copyright (C) 2013 Allwinnertech
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+
 #include  <common.h>
 #include  <malloc.h>
 #include  <asm/arch/dma.h>
@@ -33,7 +22,7 @@ unsigned int hDMA;
 #define CSP_DMAC_CFG_CONTINUOUS_ENABLE              (0x01)	//(0x01<<29)
 #define CSP_DMAC_CFG_CONTINUOUS_DISABLE             (0x00)	//(0x01<<29)
 
-//* DMA 等待时钟 */                                       	
+//* DMA 等待时钟 */
 #define	CSP_DMAC_CFG_WAIT_1_DMA_CLOCK				(0x00)	//(0x00<<26)
 #define	CSP_DMAC_CFG_WAIT_2_DMA_CLOCK				(0x01)	//(0x01<<26)
 #define	CSP_DMAC_CFG_WAIT_3_DMA_CLOCK				(0x02)	//(0x02<<26)
@@ -43,46 +32,46 @@ unsigned int hDMA;
 #define	CSP_DMAC_CFG_WAIT_7_DMA_CLOCK				(0x06)	//(0x06<<26)
 #define	CSP_DMAC_CFG_WAIT_8_DMA_CLOCK				(0x07)	//(0x07<<26)
 
-/* DMA 传输源端 配置 */                                   	
-/* DMA 目的端 传输宽度 */  
+/* DMA 传输源端 配置 */
+/* DMA 目的端 传输宽度 */
 #define	CSP_DMAC_CFG_DEST_DATA_WIDTH_8BIT			(0x00)	//(0x00<<24)
 #define	CSP_DMAC_CFG_DEST_DATA_WIDTH_16BIT			(0x01)	//(0x01<<24)
 #define	CSP_DMAC_CFG_DEST_DATA_WIDTH_32BIT			(0x02)	//(0x02<<24)
 
-/* DMA 目的端 突发传输模式 */                             	
+/* DMA 目的端 突发传输模式 */
 #define	CSP_DMAC_CFG_DEST_1_BURST       			(0x00)	//(0x00<<23)
 #define	CSP_DMAC_CFG_DEST_4_BURST		    		(0x01)	//(0x01<<23)
 
-/* DMA 目的端 地址变化模式 */                             	
+/* DMA 目的端 地址变化模式 */
 #define	CSP_DMAC_CFG_DEST_ADDR_TYPE_LINEAR_MODE		(0x00)	//(0x00<<21)
 #define	CSP_DMAC_CFG_DEST_ADDR_TYPE_IO_MODE 		(0x01)	//(0x01<<21)
 #define	CSP_DMAC_CFG_DEST_ADDR_TYPE_HPAGE_MODE 		(0x02)	//(0x02<<21)
 #define	CSP_DMAC_CFG_DEST_ADDR_TYPE_VPAGE_MODE 		(0x03)	//(0x03<<21)
 
-                                                          	
-/* DMA 传输源端 配置 */                                   	
-/* DMA 源端 传输宽度 */                                   	
+
+/* DMA 传输源端 配置 */
+/* DMA 源端 传输宽度 */
 #define	CSP_DMAC_CFG_SRC_DATA_WIDTH_8BIT			(0x00)	//(0x00<<8)
 #define	CSP_DMAC_CFG_SRC_DATA_WIDTH_16BIT			(0x01)	//(0x01<<8)
 #define	CSP_DMAC_CFG_SRC_DATA_WIDTH_32BIT			(0x02)	//(0x02<<8)
 
-/* DMA 源端 突发传输模式 */                               	
+/* DMA 源端 突发传输模式 */
 #define	CSP_DMAC_CFG_SRC_1_BURST       				(0x00)	//(0x00<<7)
 #define	CSP_DMAC_CFG_SRC_4_BURST		    		(0x01)	//(0x01<<7)
 
-/* DMA 源端 地址变化模式 */                               	
+/* DMA 源端 地址变化模式 */
 #define	CSP_DMAC_CFG_SRC_ADDR_TYPE_LINEAR_MODE		(0x00)	//(0x00<<5)
 #define	CSP_DMAC_CFG_SRC_ADDR_TYPE_IO_MODE 			(0x01)	//(0x01<<5)
 #define	CSP_DMAC_CFG_SRC_ADDR_TYPE_HPAGE_MODE 		(0x02)	//(0x02<<5)
 #define	CSP_DMAC_CFG_SRC_ADDR_TYPE_VPAGE_MODE 		(0x03)	//(0x03<<5)
 
-/* DMA 传输目的端 D型DMA 目的选择 */                      	
+/* DMA 传输目的端 D型DMA 目的选择 */
 #define	CSP_DMAC_CFG_DEST_TYPE_D_SRAM 				(0x00)	//(0x00<<16)
 #define	CSP_DMAC_CFG_DEST_TYPE_D_SDRAM				(0x01)	//(0x01<<16)
 #define	CSP_DMAC_CFG_DEST_TYPE_TCON0				(0x02)	//(0x02<<16)
 #define	CSP_DMAC_CFG_DEST_TYPE_NFC  		    	(0x03)	//(0x03<<16)
 
-/* DMA 传输源端 D型DMA 目的选择 */                        	
+/* DMA 传输源端 D型DMA 目的选择 */
 #define	CSP_DMAC_CFG_SRC_TYPE_D_SRAM 				(0x00)	//(0x00<<0)
 #define	CSP_DMAC_CFG_SRC_TYPE_D_SDRAM				(0x01)	//(0x01<<0)
 #define	CSP_DMAC_CFG_SRC_TYPE_TCON0				    (0x02)	//(0x02<<0)
@@ -100,7 +89,7 @@ typedef struct  CSP_dma_config
     unsigned int      dst_data_width   ; //数据传输宽度，0:一次传输8bit，1:一次传输16bit，2:一次传输32bit，3:保留
     unsigned int      wait_state       ; //等待时钟个数 选择范围从0-7，只对NDMA有效
     unsigned int      continuous_mode  ; //选择连续工作模式 0:传输一次即结束 1:反复传输，当一次DMA传输结束后，重新开始传输
-    
+
     unsigned int      cmt_blk_cnt	   ; //DMA传输comity counter
 }CSP_dma_config_t;
 
@@ -235,7 +224,7 @@ __s32 NAND_DMAConfigStart(int rw, unsigned int buff_addr, int len)
     p.cmt_blk_cnt           = pArg->cmt_blk_cnt;
 
     DMA_Setting(hDMA, (__dma_setting_t *)&p);
-	
+
 	if(rw) //write
 	{
 	    saddr = buff_addr;
@@ -301,7 +290,7 @@ void NAND_AHBDisable(void)
 int NAND_ClkEnable(void)
 {
      *(volatile __u32 *)(CCMU_REGS_BASE + 0x80) |= 1U<< 31;
-     
+
      return 0;
 }
 
@@ -395,7 +384,7 @@ int NAND_SetClk(unsigned int nand_clock)
 	cfg |= (nand_clk_divid_ratio & 0xf) << 0;
 
 	*(volatile __u32 *)(CCMU_REGS_BASE + 0x80) = cfg;
-	
+
 	return 0;
 }
 
@@ -407,14 +396,14 @@ int NAND_GetClk(void)
 
 	/*set nand clock*/
     cmu_clk = _GetCmuClk( );
-    
+
     /*set nand clock gate on*/
 	cfg = *(volatile __u32 *)(CCMU_REGS_BASE + 0x80);
     nand_clk_divid_ratio = ((cfg)&0xf) +1;
     nand_max_clock = cmu_clk/(2*nand_clk_divid_ratio);
-    
+
     return nand_max_clock;
-    
+
 
 }
 

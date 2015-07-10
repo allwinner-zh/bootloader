@@ -1,14 +1,11 @@
-/*********************************************************************************************************
-*                                                                NAND FLASH DRIVER
-*								(c) Copyright 2008, SoftWinners Co,Ld.
-*                                          			    All Right Reserved
-*file : nand_simple.c
-*description : this file creates some physic basic access function based on single plane for boot .
-*history :
-*	v0.1  2008-03-26 Richard
-* v0.2  2009-9-3 penggang modified for 1615
-*			
-*********************************************************************************************************/
+/*
+ * Copyright (C) 2013 Allwinnertech
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
 #include "../include/nand_type.h"
 #include "../include/nand_physic.h"
 #include "../include/nand_simple.h"
@@ -142,7 +139,7 @@ __s32 _write_single_page_wait(struct boot_physical_param *writeop,__u32 program1
 	__u32 rb;
 
 	ret = NFC_Write_Wait( NULL, writeop->mainbuf, NULL, dma_wait_mode, rb_wait_mode, NDFC_PAGE_MODE);
-	
+
 	if(SUPPORT_RANDOM)
        NFC_RandomDisable();
 
@@ -305,7 +302,7 @@ __s32 _write_single_page_0xff(struct boot_physical_param *writeop,__u32 program1
 	NFC_DeSelectRb(rb);
 	if (dma_wait_mode)
 		_pending_dma_irq_sem();
-	
+
 
 	return ret;
 }
@@ -457,7 +454,7 @@ __s32 PHY_SimpleWrite(struct boot_physical_param *writeop)
 	__u32 rb;
 
 	__s32 ret;
-	
+
 	NandIndex = 0;
 
 	ret = _write_single_page(writeop,0x80,0x10,0,0);
@@ -489,7 +486,7 @@ __s32 PHY_SimpleWrite_CurCH(struct boot_physical_param * writeop)
 	__u32 rb;
 
 	__s32 ret;
-	
+
 	//NandIndex = 0;
 
 	ret = _write_single_page(writeop,0x80,0x10,0,0);
@@ -522,7 +519,7 @@ __s32 PHY_SimpleWrite_Seq(struct boot_physical_param *writeop)
 	__u32 rb;
 
 	__s32 ret;
-	
+
 	NandIndex = 0;
 
 	ret = _write_single_page_seq(writeop,0x80,0x10,0,0);
@@ -554,7 +551,7 @@ __s32 PHY_SimpleWrite_Seq_16K(struct boot_physical_param *writeop)
 	__u32 rb;
 
 	__s32 ret;
-	
+
 	NandIndex = 0;
 
 	ret = _write_single_page_seq_16k(writeop,0x80,0x10,0,0);
@@ -586,7 +583,7 @@ __s32 PHY_SimpleWrite_0xFF(struct boot_physical_param *writeop)
 	__u32 rb;
 
 	__s32 ret;
-	
+
 	NandIndex = 0;
 
 	ret = _write_single_page_0xff(writeop,0x80,0x10,0,0);
@@ -651,7 +648,7 @@ __s32 PHY_SimpleWrite_1K(struct boot_physical_param *writeop)
 	__u32 rb;
 
 	__s32 ret;
-	
+
 	NandIndex = 0;
 
 	ret = _write_single_page_1K(writeop,0x80,0x10,0,0);
@@ -683,7 +680,7 @@ __s32 PHY_SimpleWrite_1KCurCH(struct boot_physical_param *writeop)
 	__u32 rb;
 
 	__s32 ret;
-	
+
 	//NandIndex = 0;
 
 	ret = _write_single_page_1K(writeop,0x80,0x10,0,0);

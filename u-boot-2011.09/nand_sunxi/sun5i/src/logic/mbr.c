@@ -1,3 +1,11 @@
+/*
+ * Copyright (C) 2013 Allwinnertech
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
 #include "../include/mbr.h"
 #include "../include/nand_type.h"
 #include "../include/nand_drv_cfg.h"
@@ -124,12 +132,12 @@ int NAND_PartInit(void)
 		PRINT("can't get mbr,use default mbr\n" );
 
 		part_index = 1;
-		
+
 		nand_disk_array[0].offset =0;
 		nand_disk_array[0].size = DiskSize;
 		part_secur[0] = 0;
 		nand_part_cnt = part_index;
-		
+
 		NandPartTable.magic = NAND_PART_TABLE_MAGIC;
 		NandPartTable.part_cnt = part_index;
 		for(part_cnt = 0; part_cnt<NandPartTable.part_cnt; part_cnt++)

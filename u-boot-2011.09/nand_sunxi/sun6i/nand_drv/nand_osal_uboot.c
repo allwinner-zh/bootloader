@@ -1,23 +1,12 @@
 /*
-**********************************************************************************************************************
-*											        eGon
-*						           the Embedded GO-ON Bootloader System
-*									       eGON arm boot sub-system
-*
-*						  Copyright(C), 2006-2010, SoftWinners Microelectronic Co., Ltd.
-*                                           All Rights Reserved
-*
-* File    : nand_osal_boot0.c
-*
-* By      : Jerry
-*
-* Version : V2.00
-*
-* Date	  :
-*
-* Descript:
-**********************************************************************************************************************
-*/
+ * Copyright (C) 2013 Allwinnertech
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+
 #include  <common.h>
 #include  <malloc.h>
 
@@ -88,7 +77,7 @@ __u32 _Getpll6Clk(void)
 	NAND_Print("pll6 clock is %dM\n", clock);
 	if(clock!=600)
 		NAND_Print("pll6 clock rate error!!!!!!!\n");
-	
+
 	return 600;
 }
 
@@ -97,11 +86,11 @@ int NAND_ClkRequest(__u32 nand_index)
 	__u32 cfg;
 	__u32 m, n;
 	__u32 clk_src;
-	
+
 	clk_src = 1;
 	if(clk_src)
 		  NAND_Print("NAND_ClkRequest, select pll6: %dM\n", _Getpll6Clk());
-	
+
 	if(nand_index == 0)
 	{
 		//10M
@@ -114,45 +103,45 @@ int NAND_ClkRequest(__u32 nand_index)
 		{
 			m = 14;
 			n = 1;
-		}	
-		
-	
+		}
+
+
 		/*set nand clock gate on*/
 		cfg = 0;
-	
+
 		/*gate on nand clock*/
 		cfg |= (1U << 31);
 		/*take pll6 as nand src block*/
 		cfg |=  ((clk_src&0x3) << 24);
-		
+
 		//set divn = 0
 		cfg |= (n&0x3)<<16;
 		cfg |= (m&0xf)<<0;
 
 		*(volatile __u32 *)(0x01c20000 + 0x80) = cfg;
-		
+
 		//open ahb
 		cfg = *(volatile __u32 *)(0x01c20000 + 0x60);
 		cfg |= (0x1<<13);
 		*(volatile __u32 *)(0x01c20000 + 0x60) = cfg;
-		
+
 		//reset
 		cfg = *(volatile __u32 *)(0x01c20000 + 0x2c0);
 		cfg &= (~(0x1<<13));
 		*(volatile __u32 *)(0x01c20000 + 0x2c0) = cfg;
-		
+
 		cfg = *(volatile __u32 *)(0x01c20000 + 0x2c0);
 		cfg |= (0x1<<13);
 		*(volatile __u32 *)(0x01c20000 + 0x2c0) = cfg;
-		
+
 		cfg = *(volatile __u32 *)(0x01c20000 + 0x2c0);
 		cfg &= (~(0x1<<13));
 		*(volatile __u32 *)(0x01c20000 + 0x2c0) = cfg;
-		
+
 		cfg = *(volatile __u32 *)(0x01c20000 + 0x2c0);
 		cfg |= (0x1<<13);
 		*(volatile __u32 *)(0x01c20000 + 0x2c0) = cfg;
-		
+
 		NAND_Print("NAND_ClkRequest, nand_index: 0x%x\n", nand_index);
 		NAND_Print("Reg 0x01c20080: 0x%x\n", *(volatile __u32 *)(0x01c20080));
 		NAND_Print("Reg 0x01c20060: 0x%x\n", *(volatile __u32 *)(0x01c20060));
@@ -171,10 +160,10 @@ int NAND_ClkRequest(__u32 nand_index)
 			m = 14;
 			n = 1;
 		}
-	
+
 		/*set nand clock gate on*/
 		cfg = 0;
-	
+
 		/*gate on nand clock*/
 		cfg |= (1U << 31);
 		/*take pll6 as nand src block*/
@@ -182,37 +171,37 @@ int NAND_ClkRequest(__u32 nand_index)
 		//set divn = 0
 		cfg |= (n&0x3)<<16;
 		cfg |= (m&0xf)<<0;
-	
+
 		*(volatile __u32 *)(0x01c20000 + 0x84) = cfg;
-		
+
 		//open ahb
 		cfg = *(volatile __u32 *)(0x01c20000 + 0x60);
 		cfg |= (0x1<<12);
 		*(volatile __u32 *)(0x01c20000 + 0x60) = cfg;
-		
+
 		//open reset
 		cfg = *(volatile __u32 *)(0x01c20000 + 0x2c0);
 		cfg &= (~(0x1<<12));
 		*(volatile __u32 *)(0x01c20000 + 0x2c0) = cfg;
-		
+
 		cfg = *(volatile __u32 *)(0x01c20000 + 0x2c0);
 		cfg |= (0x1<<12);
 		*(volatile __u32 *)(0x01c20000 + 0x2c0) = cfg;
-		
+
 		cfg = *(volatile __u32 *)(0x01c20000 + 0x2c0);
 		cfg &= (~(0x1<<12));
 		*(volatile __u32 *)(0x01c20000 + 0x2c0) = cfg;
-		
+
 		cfg = *(volatile __u32 *)(0x01c20000 + 0x2c0);
 		cfg |= (0x1<<12);
 		*(volatile __u32 *)(0x01c20000 + 0x2c0) = cfg;
-		
+
 		NAND_Print("NAND_ClkRequest, nand_index: 0x%x\n", nand_index);
 		NAND_Print("Reg 0x01c20084: 0x%x\n", *(volatile __u32 *)(0x01c20084));
 		NAND_Print("Reg 0x01c20060: 0x%x\n", *(volatile __u32 *)(0x01c20060));
 		NAND_Print("Reg 0x01c202c0: 0x%x\n", *(volatile __u32 *)(0x01c202c0));
-	}		
-	
+	}
+
 
 	return 0;
 }
@@ -245,10 +234,10 @@ int NAND_SetClk(__u32 nand_index, __u32 nand_clock)
 	__u32 nand_clk_divid_ratio;
 	__u32 m = 0, n = 0;
 	__u32 clk_src;
-	
+
 
 	clk_src = 1;
-	
+
 	if(clk_src == 0)
 	{
 	}
@@ -259,11 +248,11 @@ int NAND_SetClk(__u32 nand_index, __u32 nand_clock)
 		{
 			n =  1;
 			m = 14;
-		}	
+		}
 		else if((edo_clk >20)&&(edo_clk <= 40))  //20M
 		{
 			n =  0;
-			m = 14;	
+			m = 14;
 		}
 		else if((edo_clk >40)&&(edo_clk <= 50))  //25M
 		{
@@ -273,16 +262,16 @@ int NAND_SetClk(__u32 nand_index, __u32 nand_clock)
 		else if((edo_clk >50)&&(edo_clk <= 60))  //30M
 		{
 			n = 0;
-			m = 9;	
+			m = 9;
 		}
 		else //40M
 		{
 			n = 0;
 			m = 7;
 		}
-	}		
-	
-	
+	}
+
+
 	if(nand_index == 0)
 	{
 		/*set nand clock*/
@@ -292,11 +281,11 @@ int NAND_SetClk(__u32 nand_index, __u32 nand_clock)
 		cfg &= (~(0xf));
 		cfg |= ((n&0x3)<<16);
 		cfg |= ((m&0xf));
-	
+
 		*(volatile __u32 *)(0x01c20000 + 0x80) = cfg;
 		NAND_Print("NAND_SetClk, nand_index: 0x%x, clock: %d\n", nand_index, nand_clock);
 		NAND_Print("Reg 0x01c20080: 0x%x\n", *(volatile __u32 *)(0x01c20080));
-		
+
 	}
 	else
 	{
@@ -307,13 +296,13 @@ int NAND_SetClk(__u32 nand_index, __u32 nand_clock)
 		cfg &= (~(0xf));
 		cfg |= ((n&0x3)<<16);
 		cfg |= ((m&0xf));
-	
+
 		*(volatile __u32 *)(0x01c20000 + 0x84) = cfg;
 		NAND_Print("NAND_SetClk, nand_index: 0x%x, clock: %d\n", nand_index, nand_clock);
 		NAND_Print("Reg 0x01c20084: 0x%x\n", *(volatile __u32 *)(0x01c20084));
-		
-	}		
-	
+
+	}
+
 	return 0;
 }
 
@@ -323,43 +312,43 @@ int NAND_GetClk(__u32 nand_index)
 	__u32 cfg;
 	__u32 nand_max_clock, nand_clk_divid_ratio;
 	__u32 m, n;
-	
+
 	if(nand_index == 0)
 	{
 		/*set nand clock*/
 	    pll6_clk = _Getpll6Clk();
-	
+
 	    /*set nand clock gate on*/
 		cfg = *(volatile __u32 *)(0x01c20000 + 0x80);
 	    m = ((cfg)&0xf) +1;
-	    n = ((cfg>>16)&0x3); 
+	    n = ((cfg>>16)&0x3);
 	    nand_max_clock = pll6_clk/(2*(1<<n)*(m+1));
 		NAND_Print("NAND_GetClk, nand_index: 0x%x, nand_clk: %dM\n", nand_index, nand_max_clock);
 		NAND_Print("Reg 0x01c20080: 0x%x\n", *(volatile __u32 *)(0x01c20080));
-	    
-	
+
+
 	}
 	else
 	{
 		/*set nand clock*/
 	    pll6_clk = _Getpll6Clk();
-	
+
 	    /*set nand clock gate on*/
 		cfg = *(volatile __u32 *)(0x01c20000 + 0x84);
 	    m = ((cfg)&0xf) +1;
-	    n = ((cfg>>16)&0x3); 
+	    n = ((cfg>>16)&0x3);
 	    nand_max_clock = pll6_clk/(2*(1<<n)*(m+1));
 		NAND_Print("NAND_GetClk, nand_index: 0x%x, nand_clk: %dM\n", nand_index, nand_max_clock);
 		NAND_Print("Reg 0x01c20084: 0x%x\n", *(volatile __u32 *)(0x01c20084));
-	}		
-	
+	}
+
 	return nand_max_clock;
 }
 
 void NAND_PIORequest(__u32 nand_index)
 {
 	__u32 cfg;
-	
+
 	if(nand_index == 0)
 	{
 		*(volatile __u32 *)(0x01c20800 + 0x48) = 0x22222222;
@@ -368,7 +357,7 @@ void NAND_PIORequest(__u32 nand_index)
 		cfg = *(volatile __u32 *)(0x01c20800 + 0x54);
 		cfg &= (~0xfff);
 		cfg |= 0x222;
-		*(volatile __u32 *)(0x01c20800 + 0x54) = cfg;  
+		*(volatile __u32 *)(0x01c20800 + 0x54) = cfg;
 		NAND_Print("NAND_PIORequest, nand_index: 0x%x\n", nand_index);
 		NAND_Print("Reg 0x01c20848: 0x%x\n", *(volatile __u32 *)(0x01c20848));
 		NAND_Print("Reg 0x01c2084c: 0x%x\n", *(volatile __u32 *)(0x01c2084c));
@@ -376,7 +365,7 @@ void NAND_PIORequest(__u32 nand_index)
 		NAND_Print("Reg 0x01c20854: 0x%x\n", *(volatile __u32 *)(0x01c20854));
 	}
 	else if(nand_index == 1)
-	{		
+	{
 		NAND_Print("Reg 0x01c20908: 0x%x\n", *(volatile __u32 *)(0x01c20908));
 		*(volatile __u32 *)(0x01c20800 + 0x50) = 0x33333333;
 		*(volatile __u32 *)(0x01c20800 + 0xfc) = 0x22222222;
@@ -397,24 +386,24 @@ void NAND_PIORequest(__u32 nand_index)
 	}
 	else
 	{
-		
-	}		
-			
+
+	}
+
 }
 
 void NAND_PIORelease(__u32 nand_index)
 {
 	return;
-}	
+}
 
 void NAND_Memset(void* pAddr, unsigned char value, unsigned int len)
 {
-    memset(pAddr, value, len);   
+    memset(pAddr, value, len);
 }
 
 void NAND_Memcpy(void* pAddr_dst, void* pAddr_src, unsigned int len)
 {
-    memcpy(pAddr_dst, pAddr_src, len);    
+    memcpy(pAddr_dst, pAddr_src, len);
 }
 
 void * NAND_Malloc(unsigned int Size)
@@ -455,7 +444,7 @@ __u32 NAND_GetIOBaseAddrCH0(void)
 {
 	return 0x01c03000;
 }
-	
+
 __u32 NAND_GetIOBaseAddrCH1(void)
 {
 	return 0x01c05000;

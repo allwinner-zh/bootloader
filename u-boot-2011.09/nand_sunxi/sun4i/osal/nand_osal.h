@@ -1,3 +1,11 @@
+/*
+ * Copyright (C) 2013 Allwinnertech
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
 #ifndef __NAND_OSAL_H__
 #define __NAND_OSAL_H__
 
@@ -50,7 +58,7 @@ extern int NAND_Print(const char * str, ...);
 #define FREE(x,size)                    	NAND_Free((x),(size))
 
 //define the message print interface
-#define PRINT(...)							NAND_Print(__VA_ARGS__)	
+#define PRINT(...)							NAND_Print(__VA_ARGS__)
 
 #define DBUG_MSG(...)
 

@@ -1,33 +1,12 @@
 /*
-************************************************************************************************************************
-*                                                      eNand
-*                                           Nand flash driver scan module
-*
-*                             Copyright(C), 2008-2009, SoftWinners Microelectronic Co., Ltd.
-*											       All Rights Reserved
-*
-* File Name : nand_scan.c
-*
-* Author : Kevin.z
-*
-* Version : v0.1
-*
-* Date : 2008.03.27
-*
-* Description : This file scan the nand flash storage system, analyze the nand flash type
-*               and initiate the physical architecture parameters.
-*
-* Others : None at present.
-*
-*
-* History :
-*
-*  <Author>        <time>       <version>      <description>
-*
-* Kevin.z         2008.03.27      0.1          build the file
-*
-************************************************************************************************************************
-*/
+ * Copyright (C) 2013 Allwinnertech
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+
 
 #include "../include/nand_scan.h"
 #include"../include/nfc.h"
@@ -229,12 +208,12 @@ __s32 _SearchNandArchi(__u8 *pNandID, struct __NandPhyInfoPar_t *pNandArchInfo)
        //manufacture is power, search parameter from Spansion nand table
         case POWER_NAND:
             tmpNandManu = &PowerNandTbl;
-            break;     
-            
+            break;
+
 	   //manufacture is sandisk, search parameter from sandisk nand table
         case SANDISK:
             tmpNandManu = &SandiskNandTbl;
-            break;   
+            break;
 
         //manufacture is unknown, search parameter from default nand table
         default:

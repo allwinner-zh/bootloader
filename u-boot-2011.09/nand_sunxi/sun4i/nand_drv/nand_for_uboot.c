@@ -1,3 +1,11 @@
+/*
+ * Copyright (C) 2013 Allwinnertech
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
 #include <common.h>
 #include <asm/arch/nand_bsp.h>
 #include <malloc.h>
@@ -248,7 +256,7 @@ int NAND_PhyInit(void)
 		OSAL_printf("malloc main_buf failed.\n");
 		return -1;
 	}
-	
+
 	readop.chip = 0;
     readop.block = 7;
     readop.sectorbitmap = 0xffff;
